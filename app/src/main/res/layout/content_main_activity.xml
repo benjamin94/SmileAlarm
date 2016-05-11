@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.example.benjaminlize.smilealarm.EditAlarm"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="12dp"
+            android:id="@+id/linearLayout4">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="8:30 am"
+                android:id="@+id/alarm_time"
+                android:textSize="50dp"
+                android:textColor="@color/white"
+                android:layout_marginLeft="32dp"
+                />
+
+        </LinearLayout>
+
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Time till next alarm = 8hrs"
+    android:id="@+id/next_alarm_time"
+    android:layout_below="@+id/linearLayout4"
+    android:layout_alignStart="@+id/linearLayout2"
+    android:layout_marginBottom="6dp"
+    android:layout_marginTop="32dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout2"
+            android:layout_below="@+id/next_alarm_time"
+            android:layout_alignEnd="@+id/imageButton2">
+
+            <Button
+                android:text="S"
+                android:id="@+id/button1"
+                style="@style/Buttons_day"
+                />
+            <Button
+                android:text="M"
+                android:id="@+id/button2"
+                style="@style/Buttons_day"
+                />
+            <Button
+                android:text="T"
+                android:id="@+id/button3"
+                style="@style/Buttons_day"
+                />
+            <Button
+                android:text="W"
+                android:id="@+id/button4"
+                style="@style/Buttons_day"
+                />
+            <Button
+                android:text="T"
+                android:id="@+id/button5"
+                style="@style/Buttons_day"
+                />
+            <Button
+                android:text="F"
+                android:id="@+id/button6"
+                style="@style/Buttons_day"
+                />
+            <Button
+                android:text="S"
+                android:id="@+id/button7"
+                style="@style/Buttons_day"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="5 Seconds smile to wake up!"
+            android:id="@+id/textView2"
+            android:gravity="center"
+            android:layout_above="@+id/imageButton2"
+            android:layout_alignParentStart="true"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:id="@+id/linearLayout3"
+            android:layout_below="@+id/textView2"
+            android:layout_centerHorizontal="true">
+
+        </LinearLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton2"
+        android:src="@drawable/smiley2"
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>
