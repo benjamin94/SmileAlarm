@@ -1,14 +1,19 @@
 package com.example.benjaminlize.smilealarm;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.benjaminlize.smilealarm.data.AlarmContract;
+
 public class MainActivity extends AppCompatActivity {
 
+/*    TextView alarmTime;
+    Button */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +27,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),EditAlarm.class));
             }
         });
+        Cursor cursor = getContentResolver().query(
+                AlarmContract.AlarmEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+        cursor.moveToLast();
+
+
     }
+
 
 }

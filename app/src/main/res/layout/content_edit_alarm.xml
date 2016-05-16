@@ -28,6 +28,7 @@
             android:textSize="50dp"
             android:textColor="@color/white"
             android:layout_marginLeft="32dp"
+            android:onClick="showTimePickerDialog"
             />
 
     </LinearLayout>
@@ -37,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:id="@+id/radioGroup"
+        android:id="@+id/radioGroupFrequency"
         android:layout_below="@+id/linearLayout4"
         android:layout_alignStart="@+id/linearLayout2"
         android:layout_marginTop="32dp"
@@ -63,43 +64,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout2"
-        android:layout_below="@+id/radioGroup"
+        android:layout_below="@+id/radioGroupFrequency"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="32dp">
 
-        <Button
+        <ToggleButton
             android:text="S"
-            android:id="@+id/button1"
+            android:id="@+id/togglebuttonsun"
+            android:textOn="S"
+            android:textOff="S"
             style="@style/Buttons_day"
             />
-        <Button
-            android:text="M"
-            android:id="@+id/button2"
+        <ToggleButton
+            android:textOn="M"
+            android:textOff="M"
+            android:id="@+id/togglebuttonmon"
             style="@style/Buttons_day"
             />
-        <Button
-            android:text="T"
-            android:id="@+id/button3"
+        <ToggleButton
+            android:textOn="T"
+            android:textOff="T"
+            android:id="@+id/togglebuttontue"
             style="@style/Buttons_day"
             />
-        <Button
-            android:text="W"
-            android:id="@+id/button4"
+        <ToggleButton
+            android:textOn="W"
+            android:textOff="W"
+            android:id="@+id/togglebuttonwed"
             style="@style/Buttons_day"
             />
-        <Button
-            android:text="T"
-            android:id="@+id/button5"
+        <ToggleButton
+            android:textOn="T"
+            android:textOff="T"
+            android:id="@+id/togglebuttonthu"
             style="@style/Buttons_day"
             />
-        <Button
-            android:text="F"
-            android:id="@+id/button6"
+        <ToggleButton
+            android:textOn="F"
+            android:textOff="F"
+            android:id="@+id/togglebuttonfri"
             style="@style/Buttons_day"
             />
-        <Button
-            android:text="S"
-            android:id="@+id/button7"
+        <ToggleButton
+            android:textOn="S"
+            android:textOff="S"
+            android:id="@+id/togglebuttonsat"
             style="@style/Buttons_day"
             />
     </LinearLayout>
@@ -124,56 +133,63 @@
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
+        <RadioGroup
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:layout_marginRight="5dp"
-            >
+            android:orientation="horizontal"
+            android:id="@+id/radioGroupSmileTime">
 
-            <TextView
+            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="x5 seconds"
-                android:id="@+id/textView3"
+                android:id="@+id/textView4"
                 android:foregroundGravity="bottom"
-                android:layout_gravity="center"/>
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageButton"
-                android:src="@drawable/smiley2"
-                android:adjustViewBounds="true"
+                android:layout_gravity="center"
+                android:checked="true"
                 />
-        </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5">
-
-            <TextView
+            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="x10 seconds"
-                android:id="@+id/textView4"
+                android:id="@+id/textView3"
                 android:foregroundGravity="bottom"
-                android:layout_gravity="center"/>
+                android:checked="false"/>
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageButton2"
-                android:src="@drawable/smiley2"
-                android:adjustViewBounds="true"
-                />
-        </LinearLayout>
+        </RadioGroup>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:id="@+id/linearLayout5"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_centerHorizontal="true">
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:id="@+id/imageButton2"
+            android:src="@drawable/smiley2"
+            android:adjustViewBounds="true"
+            />
+
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton"
+            android:src="@drawable/smiley2"
+            android:adjustViewBounds="true"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -183,7 +199,7 @@
         android:id="@+id/linearLayout"
         android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/radioGroup">
+        android:layout_alignEnd="@+id/radioGroupFrequency">
 
         <Button
             android:layout_width="wrap_content"
@@ -202,5 +218,8 @@
             />
 
     </LinearLayout>
+
+
+
 
 </RelativeLayout>
