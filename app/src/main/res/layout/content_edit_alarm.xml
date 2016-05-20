@@ -23,9 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="8:30 am"
             android:id="@+id/alarm_time"
             android:textSize="50dp"
+            android:text="00:00 am"
             android:textColor="@color/white"
             android:layout_marginLeft="32dp"
             android:onClick="showTimePickerDialog"
@@ -118,7 +118,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Smile to wakeup time:"
-        android:id="@+id/textView2"
+        android:id="@+id/smileTime"
         android:gravity="center"
         android:layout_below="@+id/linearLayout2"
         android:layout_marginBottom="12dp"/>
@@ -130,7 +130,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:id="@+id/linearLayout3"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/smileTime"
         android:layout_centerHorizontal="true">
 
         <RadioGroup

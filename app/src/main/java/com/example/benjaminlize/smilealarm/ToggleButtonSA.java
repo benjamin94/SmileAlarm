@@ -1,6 +1,9 @@
 package com.example.benjaminlize.smilealarm;
 
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
 import android.widget.ToggleButton;
 
@@ -13,14 +16,29 @@ public class ToggleButtonSA implements View.OnClickListener {
 
     public ToggleButtonSA(ToggleButton toggleButton) {
         mToggleButton = toggleButton;
+        mToggleButton.setChecked(false);
     }
 
     @Override
     public void onClick(View v) {
         if (mToggleButton.isChecked()) {
-            mToggleButton.setBackgroundColor(Color.WHITE);
+            Resources resources = MyApplication.getsContext().getResources();
+            Drawable drawable = resources.getDrawable(R.color.colorPrimary);
+            mToggleButton.setBackgroundDrawable(drawable);
         } else {
-            mToggleButton.setBackgroundColor(Color.GREEN);
+            mToggleButton.setBackgroundColor(Color.WHITE);
         }
+
     }
+
+    public static void initToggleButton(int checked, ToggleButton button){
+        if (checked == 1){
+            button.setChecked(true);
+            Drawable drawable = ResourcesCompat.getDrawable(MyApplication.sContext.getResources(), R.color
+                    .colorPrimary, null);
+            button.setBackgroundDrawable(drawable);
+        } else button.setChecked(false);
+    }
+
+
 }
