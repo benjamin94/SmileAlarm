@@ -22,4 +22,4 @@ public class MyApplication extends Application {
         sContext = getApplicationContext();
     }
 
-    }
+}

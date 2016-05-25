@@ -1,9 +1,12 @@
 package com.example.benjaminlize.smilealarm;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -19,7 +22,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.example.benjaminlize.smilealarm.data.AlarmContract;
+import com.example.benjaminlize.smilealarm.data.AlarmContract.AlarmEntry;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,6 +34,8 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
     final String FREQ_REPEAT = "REPEAT";
     final String SMILETIME_x5 = "5secs";
     final String SMILETIME_x10 = "10secs";
+
+    final static int RQS_1 = 1;
 
     static TextView alarmTime    ;
 
@@ -91,7 +96,6 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
             case R.id.save:
 
                 ContentValues screenValues = getScreenContent();
-                writeToDb_GoToMain(screenValues);
 
                 //Select next alarm
                 Calendar calendarNow = Calendar.getInstance();
@@ -99,37 +103,20 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
 
                 int today = calendarNow.get(Calendar.DAY_OF_WEEK);
                 List<Integer> list = getAlarmDayList(today);
-                boolean alarmIn7Days = false;
-                if (list.get(0)>0){
-                    if (calendarChosen.compareTo(calendarNow) == -1){
-                        //Alarm is in 7 days
-                        alarmIn7Days = true;
-                        //TODO: set Alarm at day+7
-                    } else {
-                        //Next Alarm is Today
-                        //TODO: set Alarm today and return
-                    }
+                Calendar calendarWithAlarm = setAlarm(calendarNow, calendarChosen, list);
+                if (calendarWithAlarm == null){
+                    Toast.makeText(EditAlarm.this, "Alarm not set", Toast.LENGTH_SHORT).show();
+                    writeToCP(screenValues);
                 } else {
-                    //Next Alarm is not Today
-                    for (int day = 1; day < 7; day++) {
-                        if(list.get(day)>0){
-                            //TODO: set alarm and return
-                        }
-
-                    }
+                    String screenValueToToggle = getCalendarDayOfAlarm(calendarWithAlarm);
+                    screenValues.put(screenValueToToggle,0);
+                    writeToCP(screenValues);
+                    startActivity(new Intent(this,MainActivity.class));
                 }
-
-
-
-                //Schedule alarm
-
-                //Delete from database
-
-                int hi = 1;
                 break;
             case R.id.cancel:
                 Cursor alarmCursor = getApplicationContext().getContentResolver().query(
-                        AlarmContract.AlarmEntry.CONTENT_URI,
+                        AlarmEntry.CONTENT_URI,
                         null,
                         null,
                         null,
@@ -141,6 +128,57 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
                 break;
 
         }
+    }
+
+    private String getCalendarDayOfAlarm(Calendar calendarWithAlarm) {
+        String contentValueKey = "";
+        switch (calendarWithAlarm.get(Calendar.DAY_OF_WEEK)){
+            case Calendar.SUNDAY:
+                contentValueKey = AlarmEntry.COLUMN_DAY_SUNDAY   ;
+                break;
+            case Calendar.MONDAY:
+                contentValueKey = AlarmEntry.COLUMN_DAY_MONDAY   ;
+                break;
+            case Calendar.TUESDAY:
+                contentValueKey = AlarmEntry.COLUMN_DAY_TUESDAY  ;
+                break;
+            case Calendar.WEDNESDAY:
+                contentValueKey = AlarmEntry.COLUMN_DAY_WEDNESDAY;
+                break;
+            case Calendar.FRIDAY:
+                contentValueKey = AlarmEntry.COLUMN_DAY_THURSDAY ;
+                break;
+            case Calendar.SATURDAY:
+                contentValueKey = AlarmEntry.COLUMN_DAY_FRIDAY   ;
+                break;
+        }
+        return contentValueKey;
+    }
+
+    private Calendar setAlarm(Calendar calendarNow, Calendar calendarChosen, List<Integer> list) {
+        Calendar calendar = calendarChosen.getInstance();
+        if (list.get(0)>0){
+            if (calendarChosen.compareTo(calendarNow) == -1){
+                //Alarm is in 7 days
+                calendar.add(Calendar.DAY_OF_MONTH,7);
+                setAlarm(calendar);
+                return calendar;
+            } else {
+                //Next Alarm is Today
+                setAlarm(calendarChosen);
+                return calendar;
+            }
+        } else {
+            //Next Alarm is not Today
+            for (int day = 1; day < 7; day++) {
+                if(list.get(day)>0){
+                    Calendar calendarPlusi = calendarChosen.getInstance();
+                    calendarPlusi.add(Calendar.DAY_OF_MONTH,day);
+                    return calendar;
+                }
+            }
+        }
+        return null;
     }
 
     private List<Integer> getAlarmDayList(int today) {
@@ -183,16 +221,20 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
         return rearrangedList;
     }
 
+    private void setAlarm(Calendar targetCal){
 
-    private void writeToDb_GoToMain(ContentValues screenValues) {
+        Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), pendingIntent);
+    }
+
+    private void writeToCP(ContentValues screenValues) {
         Uri position = null;
         position = getApplicationContext().getContentResolver().insert(
-                AlarmContract.AlarmEntry.CONTENT_URI,
+                AlarmEntry.CONTENT_URI,
                 screenValues
         );
-        if (position != null) {
-            startActivity(new Intent(this,MainActivity.class));
-        }
     }
 
     private Calendar createCalendarChosen() {
@@ -209,16 +251,16 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
 
     public ContentValues getScreenContent() {
         ContentValues screenValues = new ContentValues();
-        screenValues.put(AlarmContract.AlarmEntry.COLUMN_ALARM_TIME   , getAlarmTime());
-        screenValues.put(AlarmContract.AlarmEntry.COLUMN_RECURRENCE   , radioButtonFreqWhich(radioGroupFrequency));
-        screenValues.put(AlarmContract.AlarmEntry.COLUMN_DAY_SUNDAY   , isButtonChecked(sunday   ));
-        screenValues.put(AlarmContract.AlarmEntry.COLUMN_DAY_MONDAY   , isButtonChecked(monday   ));
-        screenValues.put(AlarmContract.AlarmEntry.COLUMN_DAY_TUESDAY  , isButtonChecked(tuesday  ));
-        screenValues.put(AlarmContract.AlarmEntry.COLUMN_DAY_WEDNESDAY, isButtonChecked(wednesday));
-        screenValues.put(AlarmContract.AlarmEntry.COLUMN_DAY_THURSDAY , isButtonChecked(thursday ));
-        screenValues.put(AlarmContract.AlarmEntry.COLUMN_DAY_FRIDAY   , isButtonChecked(friday   ));
-        screenValues.put(AlarmContract.AlarmEntry.COLUMN_DAY_SATURDAY , isButtonChecked(saturday ));
-        screenValues.put(AlarmContract.AlarmEntry.COLUMN_SMILE_TIME   , radioButtonSmileTimeWhich(radioGroupSmileTime));
+        screenValues.put(AlarmEntry.COLUMN_ALARM_TIME   , getAlarmTime());
+        screenValues.put(AlarmEntry.COLUMN_RECURRENCE   , radioButtonFreqWhich(radioGroupFrequency));
+        screenValues.put(AlarmEntry.COLUMN_DAY_SUNDAY   , isButtonChecked(sunday   ));
+        screenValues.put(AlarmEntry.COLUMN_DAY_MONDAY   , isButtonChecked(monday   ));
+        screenValues.put(AlarmEntry.COLUMN_DAY_TUESDAY  , isButtonChecked(tuesday  ));
+        screenValues.put(AlarmEntry.COLUMN_DAY_WEDNESDAY, isButtonChecked(wednesday));
+        screenValues.put(AlarmEntry.COLUMN_DAY_THURSDAY , isButtonChecked(thursday ));
+        screenValues.put(AlarmEntry.COLUMN_DAY_FRIDAY   , isButtonChecked(friday   ));
+        screenValues.put(AlarmEntry.COLUMN_DAY_SATURDAY , isButtonChecked(saturday ));
+        screenValues.put(AlarmEntry.COLUMN_SMILE_TIME   , radioButtonSmileTimeWhich(radioGroupSmileTime));
 
         return screenValues;
     }
