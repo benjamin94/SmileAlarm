@@ -108,7 +108,7 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
                     Toast.makeText(EditAlarm.this, "Alarm not set", Toast.LENGTH_SHORT).show();
                     writeToCP(screenValues);
                 } else {
-                    String screenValueToToggle = getCalendarDayOfAlarm(calendarWithAlarm);
+                    String screenValueToToggle = getDayOfAlarm(calendarWithAlarm);
                     screenValues.put(screenValueToToggle,0);
                     writeToCP(screenValues);
                     startActivity(new Intent(this,MainActivity.class));
@@ -130,7 +130,7 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-    private String getCalendarDayOfAlarm(Calendar calendarWithAlarm) {
+    private String getDayOfAlarm(Calendar calendarWithAlarm) {
         String contentValueKey = "";
         switch (calendarWithAlarm.get(Calendar.DAY_OF_WEEK)){
             case Calendar.SUNDAY:
@@ -145,11 +145,14 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
             case Calendar.WEDNESDAY:
                 contentValueKey = AlarmEntry.COLUMN_DAY_WEDNESDAY;
                 break;
-            case Calendar.FRIDAY:
+            case Calendar.THURSDAY:
                 contentValueKey = AlarmEntry.COLUMN_DAY_THURSDAY ;
                 break;
+            case Calendar.FRIDAY:
+                contentValueKey = AlarmEntry.COLUMN_DAY_FRIDAY ;
+                break;
             case Calendar.SATURDAY:
-                contentValueKey = AlarmEntry.COLUMN_DAY_FRIDAY   ;
+                contentValueKey = AlarmEntry.COLUMN_DAY_SATURDAY   ;
                 break;
         }
         return contentValueKey;
