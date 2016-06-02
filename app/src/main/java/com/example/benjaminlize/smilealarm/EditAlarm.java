@@ -8,7 +8,6 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,8 +31,6 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
 
     final String FREQ_ONCE = "ONCE";
     final String FREQ_REPEAT = "REPEAT";
-    final String SMILETIME_x5 = "5secs";
-    final String SMILETIME_x10 = "10secs";
 
     final static int RQS_1 = 1;
 
@@ -96,41 +93,30 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
             case R.id.save:
 
                 ContentValues screenValues = getScreenContent();
-
-                //Select next alarm
                 Calendar calendarNow = Calendar.getInstance();
-                Calendar calendarChosen = createCalendarChosen();
 
-                int today = calendarNow.get(Calendar.DAY_OF_WEEK);
-                List<Integer> list = getAlarmDayList(today);
-                Calendar calendarWithAlarm = setAlarm(calendarNow, calendarChosen, list);
+                Calendar calendarWithAlarm = setAlarm(calendarNow);
+
                 if (calendarWithAlarm == null){
-                    Toast.makeText(EditAlarm.this, "Alarm not set", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditAlarm.this, "Please select a day", Toast.LENGTH_SHORT).show();
                     writeToCP(screenValues);
                 } else {
-                    String screenValueToToggle = getDayOfAlarm(calendarWithAlarm);
+                    //acknowledge alarm and set Alarm
+                    String screenValueToToggle = getDay(calendarWithAlarm);
                     screenValues.put(screenValueToToggle,0);
                     writeToCP(screenValues);
+                    Toast.makeText(EditAlarm.this, "Success", Toast.LENGTH_SHORT)
+                            .show();
                     startActivity(new Intent(this,MainActivity.class));
                 }
                 break;
             case R.id.cancel:
-                Cursor alarmCursor = getApplicationContext().getContentResolver().query(
-                        AlarmEntry.CONTENT_URI,
-                        null,
-                        null,
-                        null,
-                        null
-                );
-                alarmCursor.moveToFirst();
-                Toast.makeText(EditAlarm.this, "123", Toast.LENGTH_SHORT).show();
-                int hyi = 1;
-                break;
-
+                Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,MainActivity.class));
         }
     }
 
-    private String getDayOfAlarm(Calendar calendarWithAlarm) {
+    private String getDay(Calendar calendarWithAlarm) {
         String contentValueKey = "";
         switch (calendarWithAlarm.get(Calendar.DAY_OF_WEEK)){
             case Calendar.SUNDAY:
@@ -158,17 +144,19 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
         return contentValueKey;
     }
 
-    private Calendar setAlarm(Calendar calendarNow, Calendar calendarChosen, List<Integer> list) {
+    private Calendar setAlarm(Calendar calendarNow) {
+        Calendar calendarChosen = createCalendarChosen();
+        List<Integer> list = getAlarmDayList(calendarNow);
         Calendar calendar = calendarChosen.getInstance();
         if (list.get(0)>0){
             if (calendarChosen.compareTo(calendarNow) == -1){
                 //Alarm is in 7 days
                 calendar.add(Calendar.DAY_OF_MONTH,7);
-                setAlarm(calendar);
+                scheduleAlarm(calendar);
                 return calendar;
             } else {
                 //Next Alarm is Today
-                setAlarm(calendarChosen);
+                scheduleAlarm(calendarChosen);
                 return calendar;
             }
         } else {
@@ -184,7 +172,9 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
         return null;
     }
 
-    private List<Integer> getAlarmDayList(int today) {
+    private List<Integer> getAlarmDayList(Calendar calendarNow) {
+
+        int today = calendarNow.get(Calendar.DAY_OF_WEEK);
 
         int sun = 0;
         int mon = 0;
@@ -224,8 +214,8 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
         return rearrangedList;
     }
 
-    private void setAlarm(Calendar targetCal){
-
+    private void scheduleAlarm(Calendar targetCal){
+        targetCal.set(Calendar.SECOND,0);
         Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
@@ -254,8 +244,9 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
 
     public ContentValues getScreenContent() {
         ContentValues screenValues = new ContentValues();
-        screenValues.put(AlarmEntry.COLUMN_ALARM_TIME   , getAlarmTime());
-        screenValues.put(AlarmEntry.COLUMN_RECURRENCE   , radioButtonFreqWhich(radioGroupFrequency));
+        String alarmTime = getAlarmTime();
+        screenValues.put(AlarmEntry.COLUMN_ALARM_TIME   , alarmTime);
+        screenValues.put(AlarmEntry.COLUMN_RECURRENCE   ,  radioButtonFreqWhich(radioGroupFrequency));
         screenValues.put(AlarmEntry.COLUMN_DAY_SUNDAY   , isButtonChecked(sunday   ));
         screenValues.put(AlarmEntry.COLUMN_DAY_MONDAY   , isButtonChecked(monday   ));
         screenValues.put(AlarmEntry.COLUMN_DAY_TUESDAY  , isButtonChecked(tuesday  ));
@@ -271,7 +262,6 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
     private String getAlarmTime() {
         CharSequence text = alarmTime.getText();
         text = text.subSequence(0,text.length()-3);
-        Toast.makeText(EditAlarm.this, text, Toast.LENGTH_SHORT).show();
         return String.valueOf(text);
     }
 
@@ -293,8 +283,8 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
         int radioButtonID = radioGroup.getCheckedRadioButtonId();
         View radioButton = radioGroup.findViewById(radioButtonID);
         int idx = radioGroup.indexOfChild(radioButton);
-        if (idx == 0)return SMILETIME_x5;
-        else return SMILETIME_x10;
+        if (idx == 0)return AlarmEntry.SMILETIME_x5;
+        else return AlarmEntry.SMILETIME_x10;
     }
 
     public void showTimePickerDialog(View v) {

@@ -22,14 +22,14 @@
                  android:layout_alignParentTop="true"/>
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Give us your best smile for 5 seconds!"
-        android:id="@+id/textView2"
         android:layout_weight="0.1"
-        android:textSize="28dp"
         android:gravity="center"
+        android:fitsSystemWindows="true"
         />
 
 

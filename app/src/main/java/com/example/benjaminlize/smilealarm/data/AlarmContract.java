@@ -99,6 +99,9 @@ public class AlarmContract {
 
         public static final String COLUMN_SMILE_TIME    = "smile_time";
 
+        public final static String SMILETIME_x5 = "5secs";
+        public final static String SMILETIME_x10 = "10secs";
+
         public static Uri buildAlarmUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }

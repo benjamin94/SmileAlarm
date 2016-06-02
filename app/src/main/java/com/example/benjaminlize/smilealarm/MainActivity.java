@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RETURNED_ALARM_TIME    = "00:00 am"   ;
+        RETURNED_ALARM_TIME    = "00:00 am"       ;
         RETURNED_RECURRENCE    = "theRecurrence"  ;
         RETURNED_DAY_SUNDAY    = 0;
         RETURNED_DAY_MONDAY    = 0;
@@ -126,19 +126,27 @@ public class MainActivity extends AppCompatActivity {
             RETURNED_SMILE_TIME   = cursor.getString(COLUMN_SMILE_TIME   );
 
             alarmTime.setText(RETURNED_ALARM_TIME);
-            initToggleButton(RETURNED_DAY_SUNDAY   ,sunday   );
-            initToggleButton(RETURNED_DAY_MONDAY   ,monday   );
-            initToggleButton(RETURNED_DAY_TUESDAY  ,tuesday  );
-            initToggleButton(RETURNED_DAY_WEDNESDAY,wednesday);
-            initToggleButton(RETURNED_DAY_THURSDAY ,thursday );
-            initToggleButton(RETURNED_DAY_FRIDAY   ,friday   );
-            initToggleButton(RETURNED_DAY_SATURDAY ,saturday );
+            //timeToNextAlarm.setText(getString(R.s);
+
+            initToggleButton (RETURNED_DAY_SUNDAY   ,sunday   );
+            initToggleButton (RETURNED_DAY_MONDAY   ,monday   );
+            initToggleButton (RETURNED_DAY_TUESDAY  ,tuesday  );
+            initToggleButton (RETURNED_DAY_WEDNESDAY,wednesday);
+            initToggleButton (RETURNED_DAY_THURSDAY ,thursday );
+            initToggleButton (RETURNED_DAY_FRIDAY   ,friday   );
+            initToggleButton (RETURNED_DAY_SATURDAY ,saturday );
             smileTime.setText(RETURNED_SMILE_TIME);
+            if (RETURNED_SMILE_TIME == AlarmContract.AlarmEntry.SMILETIME_x5){
+                smileTimeiv.setImageResource(R.drawable.smiley1);
+            } else if(RETURNED_SMILE_TIME == AlarmContract.AlarmEntry.SMILETIME_x10){
+                smileTimeiv.setImageResource(R.drawable.supersmiley1);
+            }
         }
     }
 
     private void initViews() {
         alarmTime = (TextView)findViewById(R.id.alarm_time);
+        timeToNextAlarm = (TextView)findViewById(R.id.next_alarm_time);
         sunday = (ToggleButton)findViewById(R.id.togglebuttonsun);
         sunday.setOnClickListener(new ToggleButtonSA(sunday));
         monday = (ToggleButton)findViewById(R.id.togglebuttonmon);
@@ -153,7 +161,8 @@ public class MainActivity extends AppCompatActivity {
         friday.setOnClickListener(new ToggleButtonSA(friday));
         saturday = (ToggleButton)findViewById(R.id.togglebuttonsat);
         saturday.setOnClickListener(new ToggleButtonSA(saturday));
-        smileTime = (TextView)findViewById(R.id.smileTime);
+        smileTime = (TextView)findViewById(R.id.smileTime_main);
+        smileTimeiv = (ImageView)findViewById(R.id.smile_image_main);
 
 
     }

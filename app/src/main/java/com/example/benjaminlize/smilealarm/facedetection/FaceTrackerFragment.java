@@ -33,7 +33,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.benjaminlize.smilealarm.R;
 import com.example.benjaminlize.smilealarm.Thanks;
@@ -329,7 +328,7 @@ public final class FaceTrackerFragment extends android.app.Fragment {
             long timeSmiling = getContinuousSmileTime(face);
 
             if (timeSmiling > SMILE_TIME){
-                logNToast();
+                log();
                 startActivity(new Intent(getActivity().getApplicationContext(), Thanks.class));
             }
         }
@@ -346,11 +345,10 @@ public final class FaceTrackerFragment extends android.app.Fragment {
             }
         }
 
-        private void logNToast() {
+        private void log() {
             getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     Log.i(TAG,String.valueOf(mStartSmileTime));
-                    Toast.makeText(mContext, "we Done here", Toast.LENGTH_SHORT).show();
                 }
             });
         }

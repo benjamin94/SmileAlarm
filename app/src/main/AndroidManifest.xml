@@ -43,6 +43,11 @@
             android:name=".MainActivity"
             android:label="Smile Alarm"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name=".EditAlarm"
@@ -50,11 +55,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".SmileNow">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <receiver

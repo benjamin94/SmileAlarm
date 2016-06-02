@@ -25,7 +25,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/alarm_time"
             android:textSize="50dp"
-            android:text="00:00 am"
+            android:text="@string/alarm_time_default"
             android:textColor="@color/white"
             android:layout_marginLeft="32dp"
             android:onClick="showTimePickerDialog"
@@ -118,7 +118,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Smile to wakeup time:"
-        android:id="@+id/smileTime"
+        android:id="@+id/smileTime_main"
         android:gravity="center"
         android:layout_below="@+id/linearLayout2"
         android:layout_marginBottom="12dp"/>
@@ -130,7 +130,7 @@
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:id="@+id/linearLayout3"
-        android:layout_below="@+id/smileTime"
+        android:layout_below="@+id/smileTime_main"
         android:layout_centerHorizontal="true">
 
         <RadioGroup
@@ -178,8 +178,9 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:id="@+id/imageButton2"
-            android:src="@drawable/smiley2"
+            android:src="@drawable/smiley1"
             android:adjustViewBounds="true"
+            android:layout_marginRight="6dp"
             />
 
         <ImageButton
@@ -187,7 +188,7 @@
             android:layout_weight="0.5"
             android:layout_height="wrap_content"
             android:id="@+id/imageButton"
-            android:src="@drawable/smiley2"
+            android:src="@drawable/supersmiley1"
             android:adjustViewBounds="true"
             />
     </LinearLayout>
@@ -201,13 +202,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/radioGroupFrequency">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/save"
-            android:text="save"
-            android:layout_marginRight="50dp"
-            />
+
 
 
         <Button
@@ -215,6 +210,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/cancel"
             android:text="cancel"
+            android:layout_marginRight="50dp"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/save"
+            android:text="save"
             />
 
     </LinearLayout>

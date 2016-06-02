@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="8:30 am"
+                android:text="click to create alarm"
                 android:id="@+id/alarm_time"
                 android:textSize="50dp"
                 android:textColor="@color/white"
@@ -32,21 +32,21 @@
         </LinearLayout>
 
     <TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Time till next alarm = 8hrs"
-    android:id="@+id/next_alarm_time"
-    android:layout_below="@+id/linearLayout4"
-    android:layout_alignStart="@+id/linearLayout2"
-    android:layout_marginBottom="6dp"
-    android:layout_marginTop="32dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/time_till_next_alarm_main"
+        android:id="@+id/next_alarm_time"
+        android:layout_marginTop="39dp"
+        android:layout_below="@+id/linearLayout4"
+        android:layout_alignParentStart="true"
+        android:gravity="center_horizontal"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/linearLayout2"
             android:layout_below="@+id/next_alarm_time"
-            android:layout_alignEnd="@+id/imageButton2">
+            android:layout_centerHorizontal="true">
 
             <ToggleButton
                 android:text="S"
@@ -98,9 +98,9 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="5 Seconds smile to wake up!"
-            android:id="@+id/smileTime"
+            android:id="@+id/smileTime_main"
             android:gravity="center"
-            android:layout_above="@+id/imageButton2"
+            android:layout_above="@+id/smile_image_main"
             android:layout_alignParentStart="true"/>
 
         <LinearLayout
@@ -110,16 +110,16 @@
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
             android:id="@+id/linearLayout3"
-            android:layout_below="@+id/smileTime"
+            android:layout_below="@+id/smileTime_main"
             android:layout_centerHorizontal="true">
 
         </LinearLayout>
 
-    <ImageButton
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton2"
-        android:src="@drawable/smiley2"
+        android:id="@+id/smile_image_main"
+        android:src="@drawable/smiley1"
         android:adjustViewBounds="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
