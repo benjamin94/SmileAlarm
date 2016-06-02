@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView smileTimeiv;
 
     int COLUMN_ALARM_TIME    ;
+    int COLUMN_ALARM_TIME_MILLIS    ;
     int COLUMN_RECURRENCE    ;
     int COLUMN_DAY_SUNDAY   ;
     int COLUMN_DAY_MONDAY   ;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     int COLUMN_SMILE_TIME;
 
     String RETURNED_ALARM_TIME ;
+    String RETURNED_ALARM_TIME_MILLIS ;
     String RETURNED_RECURRENCE ;
     int RETURNED_DAY_SUNDAY    ;
     int RETURNED_DAY_MONDAY    ;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         RETURNED_ALARM_TIME    = "00:00 am"       ;
+        RETURNED_ALARM_TIME_MILLIS    = "0"       ;
         RETURNED_RECURRENCE    = "theRecurrence"  ;
         RETURNED_DAY_SUNDAY    = 0;
         RETURNED_DAY_MONDAY    = 0;
@@ -95,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
             COLUMN_ALARM_TIME   = cursor.getColumnIndex(AlarmContract.AlarmEntry.COLUMN_ALARM_TIME
             );
+            COLUMN_ALARM_TIME_MILLIS   = cursor.getColumnIndex(AlarmContract.AlarmEntry.COLUMN_ALARM_TIME_MILLIS
+            );
             COLUMN_RECURRENCE   = cursor.getColumnIndex(AlarmContract.AlarmEntry.COLUMN_RECURRENCE
             );
             COLUMN_DAY_SUNDAY   = cursor.getColumnIndex(AlarmContract.AlarmEntry.COLUMN_DAY_SUNDAY
@@ -115,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     .COLUMN_SMILE_TIME );
 
             RETURNED_ALARM_TIME   = cursor.getString (COLUMN_ALARM_TIME   );
+            RETURNED_ALARM_TIME_MILLIS   = cursor.getString (COLUMN_ALARM_TIME_MILLIS   );
             RETURNED_RECURRENCE   = cursor.getString (COLUMN_RECURRENCE   );
             RETURNED_DAY_SUNDAY   = cursor.getInt (COLUMN_DAY_SUNDAY   );
             RETURNED_DAY_MONDAY   = cursor.getInt (COLUMN_DAY_MONDAY   );
@@ -126,8 +132,10 @@ public class MainActivity extends AppCompatActivity {
             RETURNED_SMILE_TIME   = cursor.getString(COLUMN_SMILE_TIME   );
 
             alarmTime.setText(RETURNED_ALARM_TIME);
-            //timeToNextAlarm.setText(getString(R.s);
-
+            long now = System.currentTimeMillis();
+            long selected = Long.parseLong(RETURNED_ALARM_TIME_MILLIS);
+            long timeDifference = selected - now;
+            timeToNextAlarm.setText(String.valueOf(timeDifference));
             initToggleButton (RETURNED_DAY_SUNDAY   ,sunday   );
             initToggleButton (RETURNED_DAY_MONDAY   ,monday   );
             initToggleButton (RETURNED_DAY_TUESDAY  ,tuesday  );

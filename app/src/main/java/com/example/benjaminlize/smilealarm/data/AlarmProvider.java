@@ -201,6 +201,8 @@ public class AlarmProvider extends ContentProvider {
                 long _id = db.update(AlarmContract.AlarmEntry.TABLE_NAME, values, selection, selectionArgs);
                 if (_id > 0) {
                     returnedId = (int)_id;
+                }else {
+                    _id = db.insert(AlarmContract.AlarmEntry.TABLE_NAME,null,values);
                 }
                 break;
             }

@@ -86,6 +86,7 @@ public class AlarmContract {
         public static final String TABLE_NAME = "alarm_table";
 
         public static final String COLUMN_ALARM_TIME    = "alarm_time";
+        public static final String COLUMN_ALARM_TIME_MILLIS    = "alarm_time_millis";
 
         public static final String COLUMN_RECURRENCE    = "recurrence";
 
@@ -101,6 +102,11 @@ public class AlarmContract {
 
         public final static String SMILETIME_x5 = "5secs";
         public final static String SMILETIME_x10 = "10secs";
+
+        public final static String FREQ_ONCE = "ONCE";
+        public final static String FREQ_REPEAT = "REPEAT";
+
+        public final static int ALARM_PENDING_INTENT_ID = 1;
 
         public static Uri buildAlarmUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

@@ -42,10 +42,9 @@ public class AlarmDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_LOCATION_TABLE = "CREATE TABLE " + AlarmEntry.TABLE_NAME + " (" +
 
-                AlarmEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-
                 // the ID of the alarm entry and data types
                 AlarmEntry.COLUMN_ALARM_TIME    + " TEXT NOT NULL, "    +
+                AlarmEntry.COLUMN_ALARM_TIME_MILLIS    + " TEXT NOT NULL, "    +
                 AlarmEntry.COLUMN_RECURRENCE    + " TEXT NOT NULL, "    +
                 AlarmEntry.COLUMN_DAY_SUNDAY    + " BOOLEAN NOT NULL, " +
                 AlarmEntry.COLUMN_DAY_MONDAY    + " BOOLEAN NOT NULL, " +
@@ -57,6 +56,8 @@ public class AlarmDbHelper extends SQLiteOpenHelper {
                 AlarmEntry.COLUMN_SMILE_TIME    + " TEXT NOT NULL); "   ;
 
         sqLiteDatabase.execSQL(SQL_CREATE_LOCATION_TABLE);
+
+
 
     }
 

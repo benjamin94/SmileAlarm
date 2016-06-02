@@ -8,7 +8,6 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,11 +27,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public class EditAlarm extends AppCompatActivity implements View.OnClickListener {
-
-    final String FREQ_ONCE = "ONCE";
-    final String FREQ_REPEAT = "REPEAT";
-
-    final static int RQS_1 = 1;
 
     static TextView alarmTime    ;
 
@@ -99,12 +93,12 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
 
                 if (calendarWithAlarm == null){
                     Toast.makeText(EditAlarm.this, "Please select a day", Toast.LENGTH_SHORT).show();
-                    writeToCP(screenValues);
                 } else {
                     //acknowledge alarm and set Alarm
                     String screenValueToToggle = getDay(calendarWithAlarm);
                     screenValues.put(screenValueToToggle,0);
-                    writeToCP(screenValues);
+                    screenValues.put(AlarmEntry.COLUMN_ALARM_TIME_MILLIS,calendarWithAlarm.getTimeInMillis());
+                    updateCP(screenValues);
                     Toast.makeText(EditAlarm.this, "Success", Toast.LENGTH_SHORT)
                             .show();
                     startActivity(new Intent(this,MainActivity.class));
@@ -217,16 +211,18 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
     private void scheduleAlarm(Calendar targetCal){
         targetCal.set(Calendar.SECOND,0);
         Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), RQS_1, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), AlarmEntry.ALARM_PENDING_INTENT_ID, intent, 0);
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, targetCal.getTimeInMillis(), pendingIntent);
     }
 
-    private void writeToCP(ContentValues screenValues) {
-        Uri position = null;
-        position = getApplicationContext().getContentResolver().insert(
+    private void updateCP(ContentValues screenValues) {
+        int position = 0;
+        position = getApplicationContext().getContentResolver().update(
                 AlarmEntry.CONTENT_URI,
-                screenValues
+                screenValues,
+                null,
+                null
         );
     }
 
@@ -246,6 +242,7 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
         ContentValues screenValues = new ContentValues();
         String alarmTime = getAlarmTime();
         screenValues.put(AlarmEntry.COLUMN_ALARM_TIME   , alarmTime);
+        screenValues.put(AlarmEntry.COLUMN_ALARM_TIME_MILLIS   , "default");
         screenValues.put(AlarmEntry.COLUMN_RECURRENCE   ,  radioButtonFreqWhich(radioGroupFrequency));
         screenValues.put(AlarmEntry.COLUMN_DAY_SUNDAY   , isButtonChecked(sunday   ));
         screenValues.put(AlarmEntry.COLUMN_DAY_MONDAY   , isButtonChecked(monday   ));
@@ -275,8 +272,8 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
         int radioButtonID = radioGroup.getCheckedRadioButtonId();
         View radioButton = radioGroup.findViewById(radioButtonID);
         int idx = radioGroup.indexOfChild(radioButton);
-        if (idx == 0)return FREQ_ONCE;
-        else return FREQ_REPEAT;
+        if (idx == 0)return AlarmEntry.FREQ_ONCE;
+        else return AlarmEntry.FREQ_REPEAT;
     }
 
     private String radioButtonSmileTimeWhich(RadioGroup radioGroup){
