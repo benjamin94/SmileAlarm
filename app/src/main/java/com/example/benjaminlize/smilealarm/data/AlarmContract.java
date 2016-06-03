@@ -17,9 +17,14 @@ package com.example.benjaminlize.smilealarm.data;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.format.Time;
+
+import com.example.benjaminlize.smilealarm.MainActivity;
 
 /**
  * Defines table and column names for the weather database.
@@ -71,6 +76,99 @@ public class AlarmContract {
         return time.setJulianDay(julianDay);
     }
 
+    public static ContentValues queryContentProvider(Context context) {
+
+        int COLUMN_ALARM_TIME;
+        int COLUMN_ALARM_TIME_MILLIS;
+        int COLUMN_RECURRENCE;
+        int COLUMN_DAY_SUNDAY;
+        int COLUMN_DAY_MONDAY;
+        int COLUMN_DAY_TUESDAY;
+        int COLUMN_DAY_WEDNESDAY;
+        int COLUMN_DAY_THURSDAY;
+        int COLUMN_DAY_FRIDAY;
+        int COLUMN_DAY_SATURDAY;
+        int COLUMN_SMILE_TIME;
+
+
+        String RETURNED_ALARM_TIME = "00:00 am";
+        String RETURNED_ALARM_TIME_MILLIS = "0";
+        String RETURNED_RECURRENCE = "theRecurrence";
+        int RETURNED_DAY_SUNDAY = 0;
+        int RETURNED_DAY_MONDAY = 0;
+        int RETURNED_DAY_TUESDAY = 0;
+        int RETURNED_DAY_WEDNESDAY = 0;
+        int RETURNED_DAY_THURSDAY = 0;
+        int RETURNED_DAY_FRIDAY = 0;
+        int RETURNED_DAY_SATURDAY = 0;
+        String RETURNED_SMILE_TIME = "5secs";
+
+        Cursor cursor = context.getContentResolver().query(
+                AlarmEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        ContentValues contentValues = null;
+
+        if (cursor.moveToLast()) {
+            cursor.moveToLast();
+
+            COLUMN_ALARM_TIME = cursor.getColumnIndex(AlarmEntry.COLUMN_ALARM_TIME
+            );
+            COLUMN_ALARM_TIME_MILLIS = cursor.getColumnIndex(AlarmEntry.COLUMN_ALARM_MILLS
+            );
+            COLUMN_RECURRENCE = cursor.getColumnIndex(AlarmEntry.COLUMN_RECURRENCE
+            );
+            COLUMN_DAY_SUNDAY = cursor.getColumnIndex(AlarmEntry.COLUMN_DAY_SUNDAY
+            );
+            COLUMN_DAY_MONDAY = cursor.getColumnIndex(AlarmEntry.COLUMN_DAY_MONDAY
+            );
+            COLUMN_DAY_TUESDAY = cursor.getColumnIndex(AlarmEntry.COLUMN_DAY_TUESDAY
+            );
+            COLUMN_DAY_WEDNESDAY = cursor.getColumnIndex(AlarmEntry
+                    .COLUMN_DAY_WEDNESDAY);
+            COLUMN_DAY_THURSDAY = cursor.getColumnIndex(AlarmEntry
+                    .COLUMN_DAY_THURSDAY);
+            COLUMN_DAY_FRIDAY = cursor.getColumnIndex(AlarmEntry.COLUMN_DAY_FRIDAY
+            );
+            COLUMN_DAY_SATURDAY = cursor.getColumnIndex(AlarmEntry
+                    .COLUMN_DAY_SATURDAY);
+            COLUMN_SMILE_TIME = cursor.getColumnIndex(AlarmEntry
+                    .COLUMN_SMILE_TIME);
+
+            RETURNED_ALARM_TIME        = cursor.getString(COLUMN_ALARM_TIME);
+            RETURNED_ALARM_TIME_MILLIS = cursor.getString(COLUMN_ALARM_TIME_MILLIS);
+            RETURNED_RECURRENCE        = cursor.getString(COLUMN_RECURRENCE);
+            RETURNED_DAY_SUNDAY        = cursor.getInt(COLUMN_DAY_SUNDAY);
+            RETURNED_DAY_MONDAY        = cursor.getInt(COLUMN_DAY_MONDAY);
+            RETURNED_DAY_TUESDAY       = cursor.getInt(COLUMN_DAY_TUESDAY);
+            RETURNED_DAY_WEDNESDAY     = cursor.getInt(COLUMN_DAY_WEDNESDAY);
+            RETURNED_DAY_THURSDAY      = cursor.getInt(COLUMN_DAY_THURSDAY);
+            RETURNED_DAY_FRIDAY        = cursor.getInt(COLUMN_DAY_FRIDAY);
+            RETURNED_DAY_SATURDAY      = cursor.getInt(COLUMN_DAY_SATURDAY);
+            RETURNED_SMILE_TIME        = cursor.getString(COLUMN_SMILE_TIME);
+
+            contentValues = new ContentValues();
+
+            contentValues.put(AlarmEntry.COLUMN_ALARM_TIME       , MainActivity.getAlarmTime(RETURNED_ALARM_TIME));
+            contentValues.put(AlarmEntry.COLUMN_ALARM_MILLS,RETURNED_ALARM_TIME_MILLIS);
+            contentValues.put(AlarmEntry.COLUMN_RECURRENCE       ,RETURNED_RECURRENCE       );
+            contentValues.put(AlarmEntry.COLUMN_DAY_SUNDAY       ,RETURNED_DAY_SUNDAY       );
+            contentValues.put(AlarmEntry.COLUMN_DAY_MONDAY       ,RETURNED_DAY_MONDAY       );
+            contentValues.put(AlarmEntry.COLUMN_DAY_TUESDAY      ,RETURNED_DAY_TUESDAY      );
+            contentValues.put(AlarmEntry.COLUMN_DAY_WEDNESDAY    ,RETURNED_DAY_WEDNESDAY    );
+            contentValues.put(AlarmEntry.COLUMN_DAY_THURSDAY     ,RETURNED_DAY_THURSDAY     );
+            contentValues.put(AlarmEntry.COLUMN_DAY_FRIDAY       ,RETURNED_DAY_FRIDAY       );
+            contentValues.put(AlarmEntry.COLUMN_DAY_SATURDAY     ,RETURNED_DAY_SATURDAY     );
+            contentValues.put(AlarmEntry.COLUMN_SMILE_TIME       ,RETURNED_SMILE_TIME       );
+        }
+
+        return contentValues;
+    }
+
     /* Inner class that defines the table contents of the location table */
     public static final class AlarmEntry implements BaseColumns {
 
@@ -86,7 +184,7 @@ public class AlarmContract {
         public static final String TABLE_NAME = "alarm_table";
 
         public static final String COLUMN_ALARM_TIME    = "alarm_time";
-        public static final String COLUMN_ALARM_TIME_MILLIS    = "alarm_time_millis";
+        public static final String COLUMN_ALARM_MILLS = "alarm_time_millis";
 
         public static final String COLUMN_RECURRENCE    = "recurrence";
 

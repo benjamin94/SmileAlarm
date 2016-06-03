@@ -104,7 +104,7 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
         ContentValues screenValues = new ContentValues();
         String alarmTime = getAlarmTime();
         screenValues.put(AlarmEntry.COLUMN_ALARM_TIME   , alarmTime);
-        screenValues.put(AlarmEntry.COLUMN_ALARM_TIME_MILLIS   , "default");
+        screenValues.put(AlarmEntry.COLUMN_ALARM_MILLS, "default");
         screenValues.put(AlarmEntry.COLUMN_RECURRENCE   ,  radioButtonFreqWhich(radioGroupFrequency));
         screenValues.put(AlarmEntry.COLUMN_DAY_SUNDAY   , isButtonChecked(sunday   ));
         screenValues.put(AlarmEntry.COLUMN_DAY_MONDAY   , isButtonChecked(monday   ));

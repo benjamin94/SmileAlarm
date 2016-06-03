@@ -1,31 +1,32 @@
 package com.example.benjaminlize.smilealarm;
 
+import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.example.benjaminlize.smilealarm.data.AlarmContract;
-
-import static com.example.benjaminlize.smilealarm.ToggleButtonSA.initToggleButton;
+import com.example.benjaminlize.smilealarm.data.AlarmContract.AlarmEntry;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView alarmTime;
     TextView timeToNextAlarm;
 
-    ToggleButton sunday   ;
-    ToggleButton monday   ;
-    ToggleButton tuesday  ;
-    ToggleButton wednesday;
-    ToggleButton thursday ;
-    ToggleButton friday   ;
-    ToggleButton saturday ;
+    Button sunday   ;
+    Button monday   ;
+    Button tuesday  ;
+    Button wednesday;
+    Button thursday ;
+    Button friday   ;
+    Button saturday ;
 
     TextView smileTime;
     ImageView smileTimeiv;
@@ -47,116 +48,58 @@ public class MainActivity extends AppCompatActivity {
 
     private void populateViews() {
 
-        int COLUMN_ALARM_TIME    ;
-        int COLUMN_ALARM_TIME_MILLIS    ;
-        int COLUMN_RECURRENCE    ;
-        int COLUMN_DAY_SUNDAY   ;
-        int COLUMN_DAY_MONDAY   ;
-        int COLUMN_DAY_TUESDAY  ;
-        int COLUMN_DAY_WEDNESDAY;
-        int COLUMN_DAY_THURSDAY ;
-        int COLUMN_DAY_FRIDAY   ;
-        int COLUMN_DAY_SATURDAY ;
-        int COLUMN_SMILE_TIME;
+        ContentValues contentValues = AlarmContract.queryContentProvider(this);
 
+        if(contentValues != null){
 
-        String RETURNED_ALARM_TIME         = "00:00 am"       ;
-        String RETURNED_ALARM_TIME_MILLIS  = "0"       ;
-        String RETURNED_RECURRENCE         = "theRecurrence"  ;
-        int RETURNED_DAY_SUNDAY            = 0;
-        int RETURNED_DAY_MONDAY            = 0;
-        int RETURNED_DAY_TUESDAY           = 0;
-        int RETURNED_DAY_WEDNESDAY         = 0;
-        int RETURNED_DAY_THURSDAY          = 0;
-        int RETURNED_DAY_FRIDAY            = 0;
-        int RETURNED_DAY_SATURDAY          = 0;
-        String  RETURNED_SMILE_TIME        = "5secs"   ;
+            String RETURNED_ALARM_TIME       = (String) contentValues.get((AlarmEntry.COLUMN_ALARM_TIME));
+            String RETURNED_ALARM_TIME_MILLIS= (String) contentValues.get((AlarmEntry.COLUMN_ALARM_MILLS));
+            String RETURNED_RECURRENCE = (String) contentValues.get((AlarmEntry.COLUMN_RECURRENCE   ));
+            int RETURNED_DAY_SUNDAY    = (int) contentValues.get((AlarmEntry.COLUMN_DAY_SUNDAY   ));
+            int RETURNED_DAY_MONDAY    = (int) contentValues.get((AlarmEntry.COLUMN_DAY_MONDAY   ));
+            int RETURNED_DAY_TUESDAY   = (int) contentValues.get((AlarmEntry.COLUMN_DAY_TUESDAY  ));
+            int RETURNED_DAY_WEDNESDAY = (int) contentValues.get((AlarmEntry.COLUMN_DAY_WEDNESDAY));
+            int RETURNED_DAY_THURSDAY  = (int) contentValues.get((AlarmEntry.COLUMN_DAY_THURSDAY ));
+            int RETURNED_DAY_FRIDAY    = (int) contentValues.get((AlarmEntry.COLUMN_DAY_FRIDAY   ));
+            int RETURNED_DAY_SATURDAY  = (int) contentValues.get((AlarmEntry.COLUMN_DAY_SATURDAY ));
+            String RETURNED_SMILE_TIME = (String) contentValues.get((AlarmEntry.COLUMN_SMILE_TIME   ));
 
-        Cursor cursor = getContentResolver().query(
-                AlarmContract.AlarmEntry.CONTENT_URI,
-                null,
-                null,
-                null,
-                null
-        );
-
-        if (cursor.moveToLast()) {
-            cursor.moveToLast();
-
-            COLUMN_ALARM_TIME   = cursor.getColumnIndex(AlarmContract.AlarmEntry.COLUMN_ALARM_TIME
-            );
-            COLUMN_ALARM_TIME_MILLIS   = cursor.getColumnIndex(AlarmContract.AlarmEntry.COLUMN_ALARM_TIME_MILLIS
-            );
-            COLUMN_RECURRENCE   = cursor.getColumnIndex(AlarmContract.AlarmEntry.COLUMN_RECURRENCE
-            );
-            COLUMN_DAY_SUNDAY   = cursor.getColumnIndex(AlarmContract.AlarmEntry.COLUMN_DAY_SUNDAY
-            );
-            COLUMN_DAY_MONDAY   = cursor.getColumnIndex(AlarmContract.AlarmEntry.COLUMN_DAY_MONDAY
-            );
-            COLUMN_DAY_TUESDAY  = cursor.getColumnIndex(AlarmContract.AlarmEntry.COLUMN_DAY_TUESDAY
-            );
-            COLUMN_DAY_WEDNESDAY= cursor.getColumnIndex(AlarmContract.AlarmEntry
-                    .COLUMN_DAY_WEDNESDAY);
-            COLUMN_DAY_THURSDAY = cursor.getColumnIndex(AlarmContract.AlarmEntry
-                    .COLUMN_DAY_THURSDAY );
-            COLUMN_DAY_FRIDAY   = cursor.getColumnIndex(AlarmContract.AlarmEntry.COLUMN_DAY_FRIDAY
-            );
-            COLUMN_DAY_SATURDAY = cursor.getColumnIndex(AlarmContract.AlarmEntry
-                    .COLUMN_DAY_SATURDAY );
-            COLUMN_SMILE_TIME = cursor.getColumnIndex(AlarmContract.AlarmEntry
-                    .COLUMN_SMILE_TIME );
-
-            RETURNED_ALARM_TIME   = cursor.getString (COLUMN_ALARM_TIME   );
-            RETURNED_ALARM_TIME_MILLIS   = cursor.getString (COLUMN_ALARM_TIME_MILLIS   );
-            RETURNED_RECURRENCE   = cursor.getString (COLUMN_RECURRENCE   );
-            RETURNED_DAY_SUNDAY   = cursor.getInt (COLUMN_DAY_SUNDAY   );
-            RETURNED_DAY_MONDAY   = cursor.getInt (COLUMN_DAY_MONDAY   );
-            RETURNED_DAY_TUESDAY  = cursor.getInt (COLUMN_DAY_TUESDAY  );
-            RETURNED_DAY_WEDNESDAY= cursor.getInt (COLUMN_DAY_WEDNESDAY);
-            RETURNED_DAY_THURSDAY = cursor.getInt (COLUMN_DAY_THURSDAY );
-            RETURNED_DAY_FRIDAY   = cursor.getInt (COLUMN_DAY_FRIDAY   );
-            RETURNED_DAY_SATURDAY = cursor.getInt (COLUMN_DAY_SATURDAY );
-            RETURNED_SMILE_TIME   = cursor.getString(COLUMN_SMILE_TIME   );
-
-            alarmTime.setText(RETURNED_ALARM_TIME);
+            alarmTime.setText("Next Alarm at " + RETURNED_ALARM_TIME);
             long now = System.currentTimeMillis();
             long selected = Long.parseLong(RETURNED_ALARM_TIME_MILLIS);
             long timeDifference = selected - now;
             timeToNextAlarm.setText("Next alarm in: " + String.valueOf(timeDifference) + " ms");
-            initToggleButton (RETURNED_DAY_SUNDAY   ,sunday   );
-            initToggleButton (RETURNED_DAY_MONDAY   ,monday   );
-            initToggleButton (RETURNED_DAY_TUESDAY  ,tuesday  );
-            initToggleButton (RETURNED_DAY_WEDNESDAY,wednesday);
-            initToggleButton (RETURNED_DAY_THURSDAY ,thursday );
-            initToggleButton (RETURNED_DAY_FRIDAY   ,friday   );
-            initToggleButton (RETURNED_DAY_SATURDAY ,saturday );
+            initButton (RETURNED_DAY_SUNDAY   ,sunday   );
+            initButton (RETURNED_DAY_MONDAY   ,monday   );
+            initButton (RETURNED_DAY_TUESDAY  ,tuesday  );
+            initButton (RETURNED_DAY_WEDNESDAY,wednesday);
+            initButton (RETURNED_DAY_THURSDAY ,thursday );
+            initButton (RETURNED_DAY_FRIDAY   ,friday   );
+            initButton (RETURNED_DAY_SATURDAY ,saturday );
             smileTime.setText("Smile " + RETURNED_SMILE_TIME + " seconds to dismiss alarm");
-            if (RETURNED_SMILE_TIME == AlarmContract.AlarmEntry.SMILETIME_x5){
+            if (RETURNED_SMILE_TIME.equals(AlarmEntry.SMILETIME_x5)){
                 smileTimeiv.setImageResource(R.drawable.smiley1);
-            } else if(RETURNED_SMILE_TIME == AlarmContract.AlarmEntry.SMILETIME_x10){
+            } else if(RETURNED_SMILE_TIME.equals(AlarmEntry.SMILETIME_x10)){
                 smileTimeiv.setImageResource(R.drawable.supersmiley1);
             }
+
         }
+
     }
 
     private void initViews() {
         alarmTime = (TextView)findViewById(R.id.alarm_time);
         timeToNextAlarm = (TextView)findViewById(R.id.next_alarm_time);
-        sunday = (ToggleButton)findViewById(R.id.togglebuttonsun);
-        sunday.setOnClickListener(new ToggleButtonSA(sunday));
-        monday = (ToggleButton)findViewById(R.id.togglebuttonmon);
-        monday.setOnClickListener(new ToggleButtonSA(monday));
-        tuesday = (ToggleButton)findViewById(R.id.togglebuttontue);
-        tuesday.setOnClickListener(new ToggleButtonSA(tuesday));
-        wednesday = (ToggleButton)findViewById(R.id.togglebuttonwed);
-        wednesday.setOnClickListener(new ToggleButtonSA(wednesday));
-        thursday = (ToggleButton)findViewById(R.id.togglebuttonthu);
-        thursday.setOnClickListener(new ToggleButtonSA(thursday));
-        friday = (ToggleButton)findViewById(R.id.togglebuttonfri);
-        friday.setOnClickListener(new ToggleButtonSA(friday));
-        saturday = (ToggleButton)findViewById(R.id.togglebuttonsat);
-        saturday.setOnClickListener(new ToggleButtonSA(saturday));
-        smileTime = (TextView)findViewById(R.id.smileTime_main);
+
+        sunday    = (Button)findViewById(R.id.togglebuttonsun);
+        monday    = (Button)findViewById(R.id.togglebuttonmon);
+        tuesday   = (Button)findViewById(R.id.togglebuttontue);
+        wednesday = (Button)findViewById(R.id.togglebuttonwed);
+        thursday  = (Button)findViewById(R.id.togglebuttonthu);
+        friday    = (Button)findViewById(R.id.togglebuttonfri);
+        saturday  = (Button)findViewById(R.id.togglebuttonsat);
+
+        smileTime   = (TextView)findViewById(R.id.smileTime_main);
         smileTimeiv = (ImageView)findViewById(R.id.smile_image_main);
 
 
@@ -170,5 +113,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void initButton(int checked, Button button){
+        if (checked == 1){
+            //button.setChecked(true);
+            Drawable drawable = ResourcesCompat.getDrawable(MyApplication.sContext.getResources(), R.color
+                    .colorPrimary, null);
+            button.setBackgroundDrawable(drawable);
+        }
+    }
 
+    public static String getAlarmTime(CharSequence alarmTime) {
+        alarmTime = (String) alarmTime.subSequence(0,alarmTime.length()-3);
+        return String.valueOf(alarmTime);
+    }
 }

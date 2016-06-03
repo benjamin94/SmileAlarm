@@ -44,7 +44,7 @@ public class AlarmDbHelper extends SQLiteOpenHelper {
 
                 // the ID of the alarm entry and data types
                 AlarmEntry.COLUMN_ALARM_TIME    + " TEXT NOT NULL, "    +
-                AlarmEntry.COLUMN_ALARM_TIME_MILLIS    + " TEXT NOT NULL, "    +
+                AlarmEntry.COLUMN_ALARM_MILLS + " TEXT NOT NULL, "    +
                 AlarmEntry.COLUMN_RECURRENCE    + " TEXT NOT NULL, "    +
                 AlarmEntry.COLUMN_DAY_SUNDAY    + " BOOLEAN NOT NULL, " +
                 AlarmEntry.COLUMN_DAY_MONDAY    + " BOOLEAN NOT NULL, " +

@@ -117,15 +117,14 @@ public class AlarmConverter {
         Calendar calendarChosen = createCalendarChosen(String.valueOf(mScreenValues.get(AlarmContract
                 .AlarmEntry.COLUMN_ALARM_TIME)));
         List<Integer> list = getAlarmDayList(calendarNow,mScreenValues);
-        Calendar calendar = calendarChosen.getInstance();
         if (list.get(0)>0){
             if (calendarChosen.compareTo(calendarNow) == -1){
                 //AlarmConverter is in 7 days
-                calendar.add(Calendar.DAY_OF_MONTH,7);
-                return calendar;
-            } else {
+                calendarChosen.add(Calendar.DAY_OF_MONTH,7);
+                return calendarChosen;
+            } else if (calendarChosen.compareTo(calendarNow) >= 0){
                 //Alarm is today
-                return calendar;
+                return calendarChosen;
             }
         } else {
             //Next AlarmConverter is not Today
@@ -133,16 +132,15 @@ public class AlarmConverter {
                 if(list.get(day)>0){
                     Calendar calendarPlusi = calendarChosen.getInstance();
                     calendarPlusi.add(Calendar.DAY_OF_MONTH,day);
-                    return calendar;
+                    return calendarPlusi;
                 }
             }
         }
-        return null;
+        return calendarChosen;
     }
 
     private Calendar createCalendarChosen(String alarmTime) {
         Calendar calendar = Calendar.getInstance();
-        alarmTime = alarmTime;
         CharSequence hour = alarmTime.subSequence(0,2);
         int hr = Integer.parseInt(hour.toString());
         CharSequence minute = alarmTime.subSequence(3,5);
@@ -155,9 +153,9 @@ public class AlarmConverter {
 
     protected void setAlarm(Calendar calendarWithAlarm) {
         //acknowledge alarm and set AlarmConverter
-        String screenValueToToggle = getDay(calendarWithAlarm);
-        mScreenValues.put(screenValueToToggle,0);
-        mScreenValues.put(AlarmContract.AlarmEntry.COLUMN_ALARM_TIME_MILLIS,calendarWithAlarm.getTimeInMillis());
+        //String screenValueToToggle = getDay(calendarWithAlarm);
+        //mScreenValues.put(screenValueToToggle,0);
+        mScreenValues.put(AlarmContract.AlarmEntry.COLUMN_ALARM_MILLS,calendarWithAlarm.getTimeInMillis());
         scheduleAlarm(calendarWithAlarm);
         updateCP(mScreenValues, mContext);
     }

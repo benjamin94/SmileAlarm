@@ -24,7 +24,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="click to create alarm"
                 android:id="@+id/alarm_time"
-                android:textSize="50dp"
+                android:fitsSystemWindows="true"
                 android:textColor="@color/white"
                 android:layout_marginLeft="32dp"
                 />
@@ -48,46 +48,38 @@
             android:layout_below="@+id/next_alarm_time"
             android:layout_centerHorizontal="true">
 
-            <ToggleButton
+            <Button
                 android:text="S"
                 android:id="@+id/togglebuttonsun"
-                android:textOn="S"
-                android:textOff="S"
                 style="@style/Buttons_day"
                 />
-            <ToggleButton
-                android:textOn="M"
-                android:textOff="M"
+            <Button
+                android:text="M"
                 android:id="@+id/togglebuttonmon"
                 style="@style/Buttons_day"
                 />
-            <ToggleButton
-                android:textOn="T"
-                android:textOff="T"
+            <Button
+                android:text="T"
                 android:id="@+id/togglebuttontue"
                 style="@style/Buttons_day"
                 />
-            <ToggleButton
-                android:textOn="W"
-                android:textOff="W"
+            <Button
+                android:text="W"
                 android:id="@+id/togglebuttonwed"
                 style="@style/Buttons_day"
                 />
-            <ToggleButton
-                android:textOn="T"
-                android:textOff="T"
+            <Button
+                android:text="T"
                 android:id="@+id/togglebuttonthu"
                 style="@style/Buttons_day"
                 />
-            <ToggleButton
-                android:textOn="F"
-                android:textOff="F"
+            <Button
+                android:text="F"
                 android:id="@+id/togglebuttonfri"
                 style="@style/Buttons_day"
                 />
-            <ToggleButton
-                android:textOn="S"
-                android:textOff="S"
+            <Button
+                android:text="S"
                 android:id="@+id/togglebuttonsat"
                 style="@style/Buttons_day"
                 />
