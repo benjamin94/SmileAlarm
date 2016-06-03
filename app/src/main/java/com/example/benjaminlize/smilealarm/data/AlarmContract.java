@@ -100,13 +100,11 @@ public class AlarmContract {
 
         public static final String COLUMN_SMILE_TIME    = "smile_time";
 
-        public final static String SMILETIME_x5 = "5secs";
-        public final static String SMILETIME_x10 = "10secs";
+        public final static String SMILETIME_x5 = "5";
+        public final static String SMILETIME_x10 = "10";
 
         public final static String FREQ_ONCE = "ONCE";
         public final static String FREQ_REPEAT = "REPEAT";
-
-        public final static int ALARM_PENDING_INTENT_ID = 1;
 
         public static Uri buildAlarmUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

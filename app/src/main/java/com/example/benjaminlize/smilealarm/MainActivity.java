@@ -30,30 +30,6 @@ public class MainActivity extends AppCompatActivity {
     TextView smileTime;
     ImageView smileTimeiv;
 
-    int COLUMN_ALARM_TIME    ;
-    int COLUMN_ALARM_TIME_MILLIS    ;
-    int COLUMN_RECURRENCE    ;
-    int COLUMN_DAY_SUNDAY   ;
-    int COLUMN_DAY_MONDAY   ;
-    int COLUMN_DAY_TUESDAY  ;
-    int COLUMN_DAY_WEDNESDAY;
-    int COLUMN_DAY_THURSDAY ;
-    int COLUMN_DAY_FRIDAY   ;
-    int COLUMN_DAY_SATURDAY ;
-    int COLUMN_SMILE_TIME;
-
-    String RETURNED_ALARM_TIME ;
-    String RETURNED_ALARM_TIME_MILLIS ;
-    String RETURNED_RECURRENCE ;
-    int RETURNED_DAY_SUNDAY    ;
-    int RETURNED_DAY_MONDAY    ;
-    int RETURNED_DAY_TUESDAY   ;
-    int RETURNED_DAY_WEDNESDAY ;
-    int RETURNED_DAY_THURSDAY  ;
-    int RETURNED_DAY_FRIDAY    ;
-    int RETURNED_DAY_SATURDAY  ;
-    String  RETURNED_SMILE_TIME;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,29 +37,40 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         initViews();
-        alarmTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),EditAlarm.class));
-            }
-        });
-
-        RETURNED_ALARM_TIME    = "00:00 am"       ;
-        RETURNED_ALARM_TIME_MILLIS    = "0"       ;
-        RETURNED_RECURRENCE    = "theRecurrence"  ;
-        RETURNED_DAY_SUNDAY    = 0;
-        RETURNED_DAY_MONDAY    = 0;
-        RETURNED_DAY_TUESDAY   = 0;
-        RETURNED_DAY_WEDNESDAY = 0;
-        RETURNED_DAY_THURSDAY  = 0;
-        RETURNED_DAY_FRIDAY    = 0;
-        RETURNED_DAY_SATURDAY  = 0;
-        RETURNED_SMILE_TIME    = "5secs"   ;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        populateViews();
+    }
+
+    private void populateViews() {
+
+        int COLUMN_ALARM_TIME    ;
+        int COLUMN_ALARM_TIME_MILLIS    ;
+        int COLUMN_RECURRENCE    ;
+        int COLUMN_DAY_SUNDAY   ;
+        int COLUMN_DAY_MONDAY   ;
+        int COLUMN_DAY_TUESDAY  ;
+        int COLUMN_DAY_WEDNESDAY;
+        int COLUMN_DAY_THURSDAY ;
+        int COLUMN_DAY_FRIDAY   ;
+        int COLUMN_DAY_SATURDAY ;
+        int COLUMN_SMILE_TIME;
+
+
+        String RETURNED_ALARM_TIME         = "00:00 am"       ;
+        String RETURNED_ALARM_TIME_MILLIS  = "0"       ;
+        String RETURNED_RECURRENCE         = "theRecurrence"  ;
+        int RETURNED_DAY_SUNDAY            = 0;
+        int RETURNED_DAY_MONDAY            = 0;
+        int RETURNED_DAY_TUESDAY           = 0;
+        int RETURNED_DAY_WEDNESDAY         = 0;
+        int RETURNED_DAY_THURSDAY          = 0;
+        int RETURNED_DAY_FRIDAY            = 0;
+        int RETURNED_DAY_SATURDAY          = 0;
+        String  RETURNED_SMILE_TIME        = "5secs"   ;
 
         Cursor cursor = getContentResolver().query(
                 AlarmContract.AlarmEntry.CONTENT_URI,
@@ -135,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             long now = System.currentTimeMillis();
             long selected = Long.parseLong(RETURNED_ALARM_TIME_MILLIS);
             long timeDifference = selected - now;
-            timeToNextAlarm.setText(String.valueOf(timeDifference));
+            timeToNextAlarm.setText("Next alarm in: " + String.valueOf(timeDifference) + " ms");
             initToggleButton (RETURNED_DAY_SUNDAY   ,sunday   );
             initToggleButton (RETURNED_DAY_MONDAY   ,monday   );
             initToggleButton (RETURNED_DAY_TUESDAY  ,tuesday  );
@@ -143,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             initToggleButton (RETURNED_DAY_THURSDAY ,thursday );
             initToggleButton (RETURNED_DAY_FRIDAY   ,friday   );
             initToggleButton (RETURNED_DAY_SATURDAY ,saturday );
-            smileTime.setText(RETURNED_SMILE_TIME);
+            smileTime.setText("Smile " + RETURNED_SMILE_TIME + " seconds to dismiss alarm");
             if (RETURNED_SMILE_TIME == AlarmContract.AlarmEntry.SMILETIME_x5){
                 smileTimeiv.setImageResource(R.drawable.smiley1);
             } else if(RETURNED_SMILE_TIME == AlarmContract.AlarmEntry.SMILETIME_x10){
@@ -171,6 +158,14 @@ public class MainActivity extends AppCompatActivity {
         saturday.setOnClickListener(new ToggleButtonSA(saturday));
         smileTime = (TextView)findViewById(R.id.smileTime_main);
         smileTimeiv = (ImageView)findViewById(R.id.smile_image_main);
+
+
+        alarmTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),EditAlarm.class));
+            }
+        });
 
 
     }
