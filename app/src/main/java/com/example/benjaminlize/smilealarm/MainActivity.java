@@ -1,8 +1,6 @@
 package com.example.benjaminlize.smilealarm;
 
-import android.content.AsyncTaskLoader;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -128,19 +126,5 @@ public class MainActivity extends AppCompatActivity {
                     .colorPrimary, null);
             button.setBackgroundDrawable(drawable);
         }
-    }
-
-    private class AsyncLoader extends AsyncTaskLoader {
-
-        public AsyncLoader(Context context) {
-            super(context);
-        }
-
-        @Override
-        public Object loadInBackground() {
-            return null;
-        }
-
-
     }
 }

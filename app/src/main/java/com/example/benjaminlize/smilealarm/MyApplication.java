@@ -3,8 +3,9 @@ package com.example.benjaminlize.smilealarm;
 import android.app.Application;
 import android.content.Context;
 
-import com.facebook.stetho.Stetho;
 import com.crashlytics.android.Crashlytics;
+import com.facebook.stetho.Stetho;
+
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -23,7 +24,7 @@ public class MyApplication extends Application {
         Fabric.with(this, new Crashlytics());
         Stetho.initializeWithDefaults(this);
         sContext = getApplicationContext();
-        //AnalyticsTrackers.initialize(sContext);
+        AnalyticsTrackers.initialize(sContext);
     }
 
 }

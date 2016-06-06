@@ -33,6 +33,9 @@
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="face"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a7db9d6655b8a61f16ba6a8c62be1beef91a36c1"/>
 
         <provider
             android:name=".data.AlarmProvider"
@@ -58,20 +61,15 @@
         </activity>
         <activity android:name=".SmileNow">
         </activity>
-
-        <receiver
-            android:name=".AlarmReceiver"
-            android:process=":remote"/>
-
         <activity
             android:name=".Thanks"
             android:label="@string/title_activity_thanks"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="a7db9d6655b8a61f16ba6a8c62be1beef91a36c1"/>
+        <receiver
+            android:name=".AlarmReceiver"
+            android:process=":remote"/>
 
         <receiver android:name=".BenSuperWidget">
             <intent-filter>
