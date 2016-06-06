@@ -9,7 +9,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_thanks">Thanks</string>
-    <string name="alarm_time_default">00:00</string>
+    <string name="alarm_time_default">click to set alarm</string>
     <string name="time_till_next_alarm_main">Next alarm in:</string>
     <string name="toolbar">toolbar</string>
     <string name="alarm_freq_once_cd">select to hear alarm only once</string>
@@ -51,4 +51,6 @@
     <string name="smile_to_wake_up_default">5 Seconds smile to wake up!</string>
     <string name="smile_alarm_team_loves_you">Smile Alarm team loves you!</string>
     <string name="my_day_is_awsome">My day is awsome</string>
+    <string name="appwidget_text">no alarm, SMILE!</string>
+    <string name="add_widget">Add widget</string>
 </resources>

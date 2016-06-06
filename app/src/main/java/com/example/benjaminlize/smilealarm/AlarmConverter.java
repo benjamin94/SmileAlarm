@@ -2,6 +2,7 @@ package com.example.benjaminlize.smilealarm;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -155,6 +156,17 @@ public class AlarmConverter {
         scheduleAlarm(calendarWithAlarm);
         mScreenValues.put(AlarmContract.AlarmEntry.COLUMN_ALARM_MILLS,calendarWithAlarm.getTimeInMillis());
         updateCP(mScreenValues, mContext);
+        updateWidget();
+    }
+
+    private void updateWidget() {
+        Intent intent = new Intent(mContext,BenSuperWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+        // since it seems the onUpdate() is only fired on that:
+        int[] ids = {R.xml.ben_super_widget_info};
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        mContext.sendBroadcast(intent);
     }
 
     protected static void updateCP(ContentValues screenValues,Context context) {
@@ -168,6 +180,7 @@ public class AlarmConverter {
     }
 
     public void acknowledgeAlarm() {
+        updateWidget();
         String valueToToggle = getDay(Calendar.getInstance());
         mScreenValues.put(valueToToggle,0);
     }

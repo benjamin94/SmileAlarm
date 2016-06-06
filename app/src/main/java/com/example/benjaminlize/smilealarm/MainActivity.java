@@ -1,6 +1,8 @@
 package com.example.benjaminlize.smilealarm;
 
+import android.content.AsyncTaskLoader;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,8 +16,6 @@ import android.widget.TextView;
 
 import com.example.benjaminlize.smilealarm.data.AlarmContract;
 import com.example.benjaminlize.smilealarm.data.AlarmContract.AlarmEntry;
-
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,12 +66,17 @@ public class MainActivity extends AppCompatActivity {
             int RETURNED_DAY_SATURDAY  = (int) contentValues.get((AlarmEntry.COLUMN_DAY_SATURDAY ));
             String RETURNED_SMILE_TIME = (String) contentValues.get((AlarmEntry.COLUMN_SMILE_TIME   ));
 
-            alarmTime.setText("Next Alarm at " + RETURNED_ALARM_TIME);
             long now = System.currentTimeMillis();
             long selected = Long.parseLong(RETURNED_ALARM_TIME_MILLIS);
             long timeDifference = selected - now;
-            String nextAlarmIn = msToHHMMSS(timeDifference);
-            timeToNextAlarm.setText("Next alarm in: " + nextAlarmIn);
+            String nextAlarmIn = AlarmContract.msToHHMMSS(timeDifference);
+            if (timeDifference > 0){
+                timeToNextAlarm.setText("Next alarm in: " + nextAlarmIn);
+                alarmTime.setText("Next Alarm at " + RETURNED_ALARM_TIME);
+            } else {
+                alarmTime.setText(getString(R.string.alarm_time_default));
+                timeToNextAlarm.setText("No next alarm, smile");
+            }
             initButton (RETURNED_DAY_SUNDAY   ,sunday   );
             initButton (RETURNED_DAY_MONDAY   ,monday   );
             initButton (RETURNED_DAY_TUESDAY  ,tuesday  );
@@ -125,10 +130,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public String msToHHMMSS(long milliseconds){
-        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(milliseconds),
-                TimeUnit.MILLISECONDS.toMinutes(milliseconds) % TimeUnit.HOURS.toMinutes(1),
-                TimeUnit.MILLISECONDS.toSeconds(milliseconds) % TimeUnit.MINUTES.toSeconds(1));
-        return hms;
+    private class AsyncLoader extends AsyncTaskLoader {
+
+        public AsyncLoader(Context context) {
+            super(context);
+        }
+
+        @Override
+        public Object loadInBackground() {
+            return null;
+        }
+
+
     }
 }

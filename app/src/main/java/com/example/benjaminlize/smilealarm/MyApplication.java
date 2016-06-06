@@ -23,6 +23,7 @@ public class MyApplication extends Application {
         Fabric.with(this, new Crashlytics());
         Stetho.initializeWithDefaults(this);
         sContext = getApplicationContext();
+        //AnalyticsTrackers.initialize(sContext);
     }
 
 }

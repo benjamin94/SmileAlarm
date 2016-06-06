@@ -30,6 +30,7 @@
             android:layout_marginStart="32dp"
             android:onClick="showTimePickerDialog"
             android:contentDescription="alarm time"
+            android:fitsSystemWindows="true"
 
             />
 

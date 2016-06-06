@@ -24,6 +24,8 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.format.Time;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Defines table and column names for the weather database.
  */
@@ -171,6 +173,13 @@ public class AlarmContract {
     public static String getAlarmHour(CharSequence alarmTime) {
         alarmTime = alarmTime.subSequence(0,alarmTime.length()-3);
         return String.valueOf(alarmTime);
+    }
+
+    public static String msToHHMMSS(long milliseconds){
+        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(milliseconds),
+                TimeUnit.MILLISECONDS.toMinutes(milliseconds) % TimeUnit.HOURS.toMinutes(1),
+                TimeUnit.MILLISECONDS.toSeconds(milliseconds) % TimeUnit.MINUTES.toSeconds(1));
+        return hms;
     }
 
     /* Inner class that defines the table contents of the location table */
