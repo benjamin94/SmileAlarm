@@ -27,8 +27,10 @@
             android:textSize="50dp"
             android:text="@string/alarm_time_default"
             android:textColor="@color/white"
-            android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp"
             android:onClick="showTimePickerDialog"
+            android:contentDescription="alarm time"
+
             />
 
     </LinearLayout>
@@ -47,15 +49,19 @@
             android:id="@+id/radioChats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Once"
-            android:checked="true" />
+            android:text="@string/once"
+            android:checked="true"
+            android:contentDescription="@string/alarm_freq_once_cd"
+            />
 
         <RadioButton
             android:id="@+id/radioPlayers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Repeat"
-            android:checked="false" />
+            android:text="@string/repeat"
+            android:checked="false"
+            android:contentDescription="@string/alarm_freq_repeat_cd"
+            />
 
     </RadioGroup>
 
@@ -69,47 +75,59 @@
         android:layout_marginBottom="32dp">
 
         <ToggleButton
-            android:text="S"
             android:id="@+id/togglebuttonsun"
-            android:textOn="S"
-            android:textOff="S"
+            android:textOn="@string/saturday"
+            android:textOff="@string/saturday"
             style="@style/Buttons_day"
+            android:contentDescription="@string/alarm_on_sunday_cd"
+
             />
         <ToggleButton
-            android:textOn="M"
-            android:textOff="M"
+            android:textOn="@string/monday"
+            android:textOff="@string/monday"
             android:id="@+id/togglebuttonmon"
             style="@style/Buttons_day"
+            android:contentDescription="@string/alarm_on_monday_cd"
             />
         <ToggleButton
-            android:textOn="T"
-            android:textOff="T"
+            android:textOn="@string/tuesday"
+            android:textOff="@string/tuesday"
             android:id="@+id/togglebuttontue"
             style="@style/Buttons_day"
+            android:contentDescription="@string/alarm_on_tuesday_cd"
+
             />
         <ToggleButton
-            android:textOn="W"
-            android:textOff="W"
+            android:textOn="@string/wednesday"
+            android:textOff="@string/wednesday"
             android:id="@+id/togglebuttonwed"
             style="@style/Buttons_day"
+            android:contentDescription="@string/alarm_on_wednesday_cd"
+
             />
         <ToggleButton
-            android:textOn="T"
-            android:textOff="T"
+            android:textOn="@string/thursday"
+            android:textOff="@string/thursday"
             android:id="@+id/togglebuttonthu"
             style="@style/Buttons_day"
+            android:contentDescription="@string/alarm_on_thursday_cd"
+
             />
         <ToggleButton
-            android:textOn="F"
-            android:textOff="F"
+            android:textOn="@string/friday"
+            android:textOff="@string/friday"
             android:id="@+id/togglebuttonfri"
             style="@style/Buttons_day"
+            android:contentDescription="@string/alarm_on_friday_cd"
+
             />
         <ToggleButton
-            android:textOn="S"
-            android:textOff="S"
+            android:textOn="@string/saturday"
+            android:textOff="@string/saturday"
             android:id="@+id/togglebuttonsat"
             style="@style/Buttons_day"
+            android:contentDescription="@string/alarm_on_saturday_cd"
+
             />
     </LinearLayout>
 
@@ -117,18 +135,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Smile to wakeup time:"
+        android:text="@string/smile_to_wakeup_time_default"
         android:id="@+id/smileTime_main"
         android:gravity="center"
         android:layout_below="@+id/linearLayout2"
-        android:layout_marginBottom="12dp"/>
+        android:layout_marginBottom="12dp"
+        android:contentDescription="@string/time_until_next_alarm_cd"
+        />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:id="@+id/linearLayout3"
         android:layout_below="@+id/smileTime_main"
         android:layout_centerHorizontal="true">
@@ -143,21 +163,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="x5 seconds"
+                android:text="@string/smile_time_5_seconds_default"
                 android:id="@+id/textView4"
                 android:foregroundGravity="bottom"
                 android:layout_gravity="center"
                 android:checked="true"
+                android:contentDescription="@string/smile_time_x5_cd"
+
                 />
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="x10 seconds"
+                android:text="@string/smile_time_10_seconds_default"
                 android:id="@+id/textView3"
                 android:foregroundGravity="bottom"
-                android:checked="false"/>
+                android:checked="false"
+                android:contentDescription="@string/smile_time_x10_cd"
+                />
 
         </RadioGroup>
 
@@ -167,8 +191,8 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:id="@+id/linearLayout5"
         android:layout_below="@+id/linearLayout3"
         android:layout_centerHorizontal="true">
@@ -180,7 +204,9 @@
             android:id="@+id/imageButton2"
             android:src="@drawable/smiley1"
             android:adjustViewBounds="true"
-            android:layout_marginRight="6dp"
+            android:layout_marginEnd="6dp"
+            android:contentDescription="@string/x5_smile_time_image_cd"
+
             />
 
         <ImageButton
@@ -190,6 +216,8 @@
             android:id="@+id/imageButton"
             android:src="@drawable/supersmiley1"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/x10_smile_time_image_cd"
+
             />
     </LinearLayout>
 
@@ -210,7 +238,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/cancel"
             android:text="cancel"
-            android:layout_marginRight="50dp"
+            android:layout_marginEnd="50dp"
+            android:contentDescription="@string/cancel_button_cd"
             />
 
         <Button
@@ -218,6 +247,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/save"
             android:text="save"
+            android:contentDescription="@string/save_button_cd"
             />
 
     </LinearLayout>

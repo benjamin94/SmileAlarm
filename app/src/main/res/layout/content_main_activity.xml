@@ -26,7 +26,9 @@
                 android:id="@+id/alarm_time"
                 android:fitsSystemWindows="true"
                 android:textColor="@color/white"
-                android:layout_marginLeft="32dp"
+                android:layout_marginStart="32dp"
+                android:contentDescription="@string/alarm_time_cd"
+
                 />
 
         </LinearLayout>
@@ -39,7 +41,9 @@
         android:layout_marginTop="39dp"
         android:layout_below="@+id/linearLayout4"
         android:layout_alignParentStart="true"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:contentDescription="@string/time_till_next_alarm_cd"
+        />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -49,39 +53,52 @@
             android:layout_centerHorizontal="true">
 
             <Button
-                android:text="S"
+                android:text="@string/sunday"
                 android:id="@+id/togglebuttonsun"
                 style="@style/Buttons_day"
+                android:contentDescription="@string/alarm_on_sunday_cd"
+
                 />
             <Button
-                android:text="M"
+                android:text="@string/monday"
                 android:id="@+id/togglebuttonmon"
                 style="@style/Buttons_day"
+                android:contentDescription="@string/alarm_on_monday_cd"
+
                 />
             <Button
-                android:text="T"
+                android:text="@string/tuesday"
                 android:id="@+id/togglebuttontue"
                 style="@style/Buttons_day"
+                android:contentDescription="@string/alarm_on_tuesday_cd"
+
                 />
             <Button
-                android:text="W"
+                android:text="@string/wednesday"
                 android:id="@+id/togglebuttonwed"
                 style="@style/Buttons_day"
+                android:contentDescription="@string/alarm_on_wednesday_cd"
                 />
             <Button
-                android:text="T"
+                android:text="@string/thursday"
                 android:id="@+id/togglebuttonthu"
                 style="@style/Buttons_day"
+                android:contentDescription="@string/alarm_on_thursday_cd"
+
                 />
             <Button
-                android:text="F"
+                android:text="@string/friday"
                 android:id="@+id/togglebuttonfri"
                 style="@style/Buttons_day"
+                android:contentDescription="@string/alarm_on_friday_cd"
+
                 />
             <Button
-                android:text="S"
+                android:text="@string/saturday"
                 android:id="@+id/togglebuttonsat"
                 style="@style/Buttons_day"
+                android:contentDescription="@string/alarm_on_saturday_cd"
+
                 />
         </LinearLayout>
 
@@ -89,18 +106,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="5 Seconds smile to wake up!"
+            android:text="@string/smile_to_wake_up_default"
             android:id="@+id/smileTime_main"
             android:gravity="center"
             android:layout_above="@+id/smile_image_main"
-            android:layout_alignParentStart="true"/>
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/smile_time_to_wakeup_cv"
+            />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:id="@+id/linearLayout3"
             android:layout_below="@+id/smileTime_main"
             android:layout_centerHorizontal="true">
@@ -114,7 +133,9 @@
         android:src="@drawable/smiley1"
         android:adjustViewBounds="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/smiling_image_cd"
+        />
 
 
 </RelativeLayout>
