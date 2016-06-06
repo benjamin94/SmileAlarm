@@ -9,6 +9,9 @@ import android.test.ApplicationTestCase;
 import com.example.benjaminlize.smilealarm.data.AlarmContract;
 import com.example.benjaminlize.smilealarm.data.AlarmDbHelper;
 
+import java.text.ParseException;
+import java.util.concurrent.TimeUnit;
+
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
@@ -147,6 +150,14 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
        // Make sure we get the correct cursor out of the database
         TestUtilities.validateCursor("testBasicLocationQueries, alarm query", alarmCursor,
                 testValues);
+    }
+
+    public void testmsToHHMMSS() throws ParseException {
+        long millis = 3600000;
+        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+                TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+        System.out.println(hms);
     }
 
 

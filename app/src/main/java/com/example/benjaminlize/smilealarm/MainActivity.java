@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.example.benjaminlize.smilealarm.data.AlarmContract;
 import com.example.benjaminlize.smilealarm.data.AlarmContract.AlarmEntry;
 
+import java.util.concurrent.TimeUnit;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView alarmTime;
@@ -68,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
             long now = System.currentTimeMillis();
             long selected = Long.parseLong(RETURNED_ALARM_TIME_MILLIS);
             long timeDifference = selected - now;
-            timeToNextAlarm.setText("Next alarm in: " + String.valueOf(timeDifference) + " ms");
+            String nextAlarmIn = msToHHMMSS(timeDifference);
+            timeToNextAlarm.setText("Next alarm in: " + nextAlarmIn);
             initButton (RETURNED_DAY_SUNDAY   ,sunday   );
             initButton (RETURNED_DAY_MONDAY   ,monday   );
             initButton (RETURNED_DAY_TUESDAY  ,tuesday  );
@@ -122,4 +125,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public String msToHHMMSS(long milliseconds){
+        String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(milliseconds),
+                TimeUnit.MILLISECONDS.toMinutes(milliseconds) % TimeUnit.HOURS.toMinutes(1),
+                TimeUnit.MILLISECONDS.toSeconds(milliseconds) % TimeUnit.MINUTES.toSeconds(1));
+        return hms;
+    }
 }

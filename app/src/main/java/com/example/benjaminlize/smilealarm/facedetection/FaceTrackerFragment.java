@@ -36,6 +36,7 @@ import android.view.ViewGroup;
 
 import com.example.benjaminlize.smilealarm.R;
 import com.example.benjaminlize.smilealarm.Thanks;
+import com.example.benjaminlize.smilealarm.data.AlarmContract;
 import com.example.benjaminlize.smilealarm.facedetection.camera.CameraSourcePreview;
 import com.example.benjaminlize.smilealarm.facedetection.camera.GraphicOverlay;
 import com.google.android.gms.common.ConnectionResult;
@@ -67,7 +68,7 @@ public final class FaceTrackerFragment extends android.app.Fragment {
     private Context mContext;
 
     private long mStartSmileTime;
-    private long SMILE_TIME = 3 * 1000;
+    private long mSmileTime;
 
     //==============================================================================================
     // Activity Methods
@@ -85,6 +86,8 @@ public final class FaceTrackerFragment extends android.app.Fragment {
         super.onCreate(icicle);
 
         mContext = getActivity().getApplicationContext();
+        mSmileTime = Long.parseLong(getArguments().getString(AlarmContract.AlarmEntry
+                .COLUMN_SMILE_TIME)) * 1000;
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
         int rc = ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA);
@@ -327,7 +330,7 @@ public final class FaceTrackerFragment extends android.app.Fragment {
             //Could also create Class Timer with methods reset, set and nothing
             long timeSmiling = getContinuousSmileTime(face);
 
-            if (timeSmiling > SMILE_TIME){
+            if (timeSmiling > mSmileTime){
                 log();
                 startActivity(new Intent(getActivity().getApplicationContext(), Thanks.class));
             }
@@ -380,6 +383,6 @@ public final class FaceTrackerFragment extends android.app.Fragment {
 
     private boolean isTimeElapsed() {
         long currentTime = System.currentTimeMillis();
-        return (currentTime - mStartSmileTime < SMILE_TIME);
+        return (currentTime - mStartSmileTime < mSmileTime);
     }
 }
