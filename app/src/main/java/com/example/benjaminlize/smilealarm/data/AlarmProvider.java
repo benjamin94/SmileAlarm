@@ -51,39 +51,19 @@ public class AlarmProvider extends ContentProvider {
         );
     }
 
-    /*
-        Students: Here is where you need to create the UriMatcher. This UriMatcher will
-        match each URI to the WEATHER, WEATHER_WITH_LOCATION, WEATHER_WITH_LOCATION_AND_DATE,
-        and LOCATION integer constants defined above.  You can test this by uncommenting the
-        testUriMatcher test within TestUriMatcher.
-     */
     static UriMatcher buildUriMatcher() {
-        // 1) The code passed into the constructor represents the code to return for the root
-        // URI.  It's common to use NO_MATCH as the code for this case. Add the constructor below.
+
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-
-        // 2) Use the addURI function to match each of the types.  Use the constants from
-        // AlarmContract to help define the types to the UriMatcher.
         uriMatcher.addURI(AlarmContract.CONTENT_AUTHORITY,AlarmContract.PATH_ALARM_DETAILS,ALARM);
-
-        // 3) Return the new matcher!
         return uriMatcher;
     }
 
-    /*
-        Students: We've coded this for you.  We just create a new AlarmDbHelper for later use
-        here.
-     */
     @Override
     public boolean onCreate() {
         mOpenHelper = new AlarmDbHelper(getContext());
         return true;
     }
 
-    /*
-        Students: Here's where you'll code the getType function that uses the UriMatcher.  You can
-        test this by uncommenting testGetType in TestProvider.
-     */
     @Override
     public String getType(Uri uri) {
 
@@ -215,8 +195,6 @@ public class AlarmProvider extends ContentProvider {
         // is null.
         // Oh, and you should notify the listeners here.
         getContext().getContentResolver().notifyChange(uri, null);
-
-
         // Student: return the actual rows deleted
         return returnedId;
     }

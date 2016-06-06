@@ -152,11 +152,8 @@ public class AlarmConverter {
     }
 
     protected void setAlarm(Calendar calendarWithAlarm) {
-        //acknowledge alarm and set AlarmConverter
-        //String screenValueToToggle = getDay(calendarWithAlarm);
-        //mScreenValues.put(screenValueToToggle,0);
-        mScreenValues.put(AlarmContract.AlarmEntry.COLUMN_ALARM_MILLS,calendarWithAlarm.getTimeInMillis());
         scheduleAlarm(calendarWithAlarm);
+        mScreenValues.put(AlarmContract.AlarmEntry.COLUMN_ALARM_MILLS,calendarWithAlarm.getTimeInMillis());
         updateCP(mScreenValues, mContext);
     }
 
@@ -168,5 +165,10 @@ public class AlarmConverter {
                 null,
                 null
         );
+    }
+
+    public void acknowledgeAlarm() {
+        String valueToToggle = getDay(Calendar.getInstance());
+        mScreenValues.put(valueToToggle,0);
     }
 }

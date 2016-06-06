@@ -122,8 +122,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static String getAlarmTime(CharSequence alarmTime) {
-        alarmTime = (String) alarmTime.subSequence(0,alarmTime.length()-3);
-        return String.valueOf(alarmTime);
-    }
 }
