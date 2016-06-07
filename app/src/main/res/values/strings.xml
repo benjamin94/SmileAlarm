@@ -53,4 +53,5 @@
     <string name="my_day_is_awsome">My day is awsome</string>
     <string name="appwidget_text">no alarm, SMILE!</string>
     <string name="add_widget">Add widget</string>
+    <string name="appwidget_text_default">welcome to Smile Alarm</string>
 </resources>

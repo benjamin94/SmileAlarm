@@ -22,15 +22,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="40sp"
             android:id="@+id/alarm_time"
             android:text="@string/alarm_time_default"
             android:textColor="@color/white"
             android:layout_marginStart="32dp"
             android:onClick="showTimePickerDialog"
             android:contentDescription="alarm time"
-            android:fitsSystemWindows="true"
-
             />
 
     </LinearLayout>

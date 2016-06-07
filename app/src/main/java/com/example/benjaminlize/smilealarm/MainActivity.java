@@ -50,47 +50,47 @@ public class MainActivity extends AppCompatActivity {
 
         ContentValues contentValues = AlarmContract.queryContentProvider(this);
 
-        if(contentValues != null){
+        if (contentValues != null) {
 
-            String RETURNED_ALARM_TIME       = (String) contentValues.get((AlarmEntry.COLUMN_ALARM_TIME));
-            String RETURNED_ALARM_TIME_MILLIS= (String) contentValues.get((AlarmEntry.COLUMN_ALARM_MILLS));
-            String RETURNED_RECURRENCE = (String) contentValues.get((AlarmEntry.COLUMN_RECURRENCE   ));
-            int RETURNED_DAY_SUNDAY    = (int) contentValues.get((AlarmEntry.COLUMN_DAY_SUNDAY   ));
-            int RETURNED_DAY_MONDAY    = (int) contentValues.get((AlarmEntry.COLUMN_DAY_MONDAY   ));
-            int RETURNED_DAY_TUESDAY   = (int) contentValues.get((AlarmEntry.COLUMN_DAY_TUESDAY  ));
+            String RETURNED_ALARM_TIME = (String) contentValues.get((AlarmEntry.COLUMN_ALARM_TIME));
+            final String RETURNED_ALARM_TIME_MILLIS = (String) contentValues.get((AlarmEntry.COLUMN_ALARM_MILLS));
+            String RETURNED_RECURRENCE = (String) contentValues.get((AlarmEntry.COLUMN_RECURRENCE));
+            int RETURNED_DAY_SUNDAY = (int) contentValues.get((AlarmEntry.COLUMN_DAY_SUNDAY));
+            int RETURNED_DAY_MONDAY = (int) contentValues.get((AlarmEntry.COLUMN_DAY_MONDAY));
+            int RETURNED_DAY_TUESDAY = (int) contentValues.get((AlarmEntry.COLUMN_DAY_TUESDAY));
             int RETURNED_DAY_WEDNESDAY = (int) contentValues.get((AlarmEntry.COLUMN_DAY_WEDNESDAY));
-            int RETURNED_DAY_THURSDAY  = (int) contentValues.get((AlarmEntry.COLUMN_DAY_THURSDAY ));
-            int RETURNED_DAY_FRIDAY    = (int) contentValues.get((AlarmEntry.COLUMN_DAY_FRIDAY   ));
-            int RETURNED_DAY_SATURDAY  = (int) contentValues.get((AlarmEntry.COLUMN_DAY_SATURDAY ));
-            String RETURNED_SMILE_TIME = (String) contentValues.get((AlarmEntry.COLUMN_SMILE_TIME   ));
+            int RETURNED_DAY_THURSDAY = (int) contentValues.get((AlarmEntry.COLUMN_DAY_THURSDAY));
+            int RETURNED_DAY_FRIDAY = (int) contentValues.get((AlarmEntry.COLUMN_DAY_FRIDAY));
+            int RETURNED_DAY_SATURDAY = (int) contentValues.get((AlarmEntry.COLUMN_DAY_SATURDAY));
+            String RETURNED_SMILE_TIME = (String) contentValues.get((AlarmEntry.COLUMN_SMILE_TIME));
 
             long now = System.currentTimeMillis();
             long selected = Long.parseLong(RETURNED_ALARM_TIME_MILLIS);
             long timeDifference = selected - now;
             String nextAlarmIn = AlarmContract.msToHHMMSS(timeDifference);
-            if (timeDifference > 0){
-                timeToNextAlarm.setText("Next alarm in: " + nextAlarmIn);
+
+            if (timeDifference > 0) {
+                timeToNextAlarm.setText("Next alarm in: " + nextAlarmIn.subSequence(0,5));
                 alarmTime.setText("Next Alarm at " + RETURNED_ALARM_TIME);
             } else {
                 alarmTime.setText(getString(R.string.alarm_time_default));
                 timeToNextAlarm.setText("No next alarm, smile");
             }
-            initButton (RETURNED_DAY_SUNDAY   ,sunday   );
-            initButton (RETURNED_DAY_MONDAY   ,monday   );
-            initButton (RETURNED_DAY_TUESDAY  ,tuesday  );
-            initButton (RETURNED_DAY_WEDNESDAY,wednesday);
-            initButton (RETURNED_DAY_THURSDAY ,thursday );
-            initButton (RETURNED_DAY_FRIDAY   ,friday   );
-            initButton (RETURNED_DAY_SATURDAY ,saturday );
+            initButton(RETURNED_DAY_SUNDAY, sunday);
+            initButton(RETURNED_DAY_MONDAY, monday);
+            initButton(RETURNED_DAY_TUESDAY, tuesday);
+            initButton(RETURNED_DAY_WEDNESDAY, wednesday);
+            initButton(RETURNED_DAY_THURSDAY, thursday);
+            initButton(RETURNED_DAY_FRIDAY, friday);
+            initButton(RETURNED_DAY_SATURDAY, saturday);
             smileTime.setText("Smile " + RETURNED_SMILE_TIME + " seconds to dismiss alarm");
-            if (RETURNED_SMILE_TIME.equals(AlarmEntry.SMILETIME_x5)){
+            if (RETURNED_SMILE_TIME.equals(AlarmEntry.SMILETIME_x5)) {
                 smileTimeiv.setImageResource(R.drawable.smiley1);
-            } else if(RETURNED_SMILE_TIME.equals(AlarmEntry.SMILETIME_x10)){
+            } else if (RETURNED_SMILE_TIME.equals(AlarmEntry.SMILETIME_x10)) {
                 smileTimeiv.setImageResource(R.drawable.supersmiley1);
             }
 
         }
-
     }
 
     private void initViews() {

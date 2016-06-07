@@ -21,14 +21,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="click to create alarm"
                 android:id="@+id/alarm_time"
-                android:fitsSystemWindows="true"
+                android:textSize="40sp"
                 android:textColor="@color/white"
                 android:layout_marginStart="32dp"
                 android:contentDescription="@string/alarm_time_cd"
-
                 />
 
         </LinearLayout>

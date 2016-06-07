@@ -137,7 +137,7 @@ public class AlarmConverter {
                 }
             }
         }
-        return calendarChosen;
+        return null;
     }
 
     private Calendar createCalendarChosen(String alarmTime) {
@@ -153,20 +153,22 @@ public class AlarmConverter {
     }
 
     protected void setAlarm(Calendar calendarWithAlarm) {
-        scheduleAlarm(calendarWithAlarm);
-        mScreenValues.put(AlarmContract.AlarmEntry.COLUMN_ALARM_MILLS,calendarWithAlarm.getTimeInMillis());
+        if (calendarWithAlarm!=null){
+            scheduleAlarm(calendarWithAlarm);
+            mScreenValues.put(AlarmContract.AlarmEntry.COLUMN_ALARM_MILLS,calendarWithAlarm.getTimeInMillis());
+        }
         updateCP(mScreenValues, mContext);
         updateWidget();
     }
 
     private void updateWidget() {
         Intent intent = new Intent(mContext,BenSuperWidget.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-        // since it seems the onUpdate() is only fired on that:
+        intent.setAction(BenSuperWidget.YOUR_AWESOME_ACTION);
         int[] ids = {R.xml.ben_super_widget_info};
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
         mContext.sendBroadcast(intent);
+
+        //BenSuperWidget.updateAppWidget(mContext,AppWidgetManager.EXTRA_APPWIDGET_IDS);
     }
 
     protected static void updateCP(ContentValues screenValues,Context context) {
@@ -180,8 +182,8 @@ public class AlarmConverter {
     }
 
     public void acknowledgeAlarm() {
-        updateWidget();
         String valueToToggle = getDay(Calendar.getInstance());
         mScreenValues.put(valueToToggle,0);
+        updateWidget();
     }
 }

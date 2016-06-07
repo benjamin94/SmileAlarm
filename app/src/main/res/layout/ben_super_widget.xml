@@ -13,7 +13,8 @@
         android:layout_margin="8dp"
         android:background="@color/colorPrimaryDark"
         android:contentDescription="@string/appwidget_text"
-        android:text="@string/appwidget_text"
+        android:text="@string/appwidget_text_default"
+        android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold|italic"/>

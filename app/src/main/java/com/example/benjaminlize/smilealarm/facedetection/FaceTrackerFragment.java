@@ -24,6 +24,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -69,6 +72,7 @@ public final class FaceTrackerFragment extends android.app.Fragment {
 
     private long mStartSmileTime;
     private long mSmileTime;
+    private Ringtone mRingtone;
 
     //==============================================================================================
     // Activity Methods
@@ -88,6 +92,13 @@ public final class FaceTrackerFragment extends android.app.Fragment {
         mContext = getActivity().getApplicationContext();
         mSmileTime = Long.parseLong(getArguments().getString(AlarmContract.AlarmEntry
                 .COLUMN_SMILE_TIME)) * 1000;
+
+        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        if (alarmUri == null) {
+            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }
+        mRingtone = RingtoneManager.getRingtone(mContext, alarmUri);
+        mRingtone.play();
         // Check for the camera permission before accessing the camera.  If the
         // permission is not granted yet, request permission.
         int rc = ActivityCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA);
@@ -332,6 +343,7 @@ public final class FaceTrackerFragment extends android.app.Fragment {
 
             if (timeSmiling > mSmileTime){
                 log();
+                mRingtone.stop();
                 startActivity(new Intent(getActivity().getApplicationContext(), Thanks.class));
             }
         }
@@ -377,8 +389,7 @@ public final class FaceTrackerFragment extends android.app.Fragment {
     }
 
     private boolean isSmiling(Face face) {
-        //not smiling atm
-        return face.getIsSmilingProbability() < 0.6;
+        return face.getIsSmilingProbability() > 0.6;
     }
 
     private boolean isTimeElapsed() {

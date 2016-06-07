@@ -68,8 +68,7 @@
         </activity>
 
         <receiver
-            android:name=".AlarmReceiver"
-            android:process=":remote"/>
+            android:name=".AlarmReceiver"/>
 
         <receiver android:name=".BenSuperWidget">
             <intent-filter>
