@@ -115,8 +115,11 @@ public class AlarmConverter {
 
     protected Calendar getCalendarNextAlarm() {
         Calendar calendarNow = Calendar.getInstance();
-        Calendar calendarChosen = createCalendarChosen(String.valueOf(mScreenValues.get(AlarmContract
-                .AlarmEntry.COLUMN_ALARM_TIME)));
+        String alarmTime = String.valueOf(mScreenValues.get(AlarmContract.AlarmEntry.COLUMN_ALARM_TIME));
+        if (alarmTime.length()==2) {
+            return null;
+        }
+        Calendar calendarChosen = createCalendarChosen(alarmTime);
         List<Integer> list = getAlarmDayList(calendarNow,mScreenValues);
         if (list.get(0)>0){
             if (calendarChosen.compareTo(calendarNow) == -1){

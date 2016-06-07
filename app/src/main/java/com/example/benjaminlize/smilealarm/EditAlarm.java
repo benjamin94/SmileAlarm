@@ -91,7 +91,9 @@ public class EditAlarm extends AppCompatActivity implements View.OnClickListener
                     Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this,MainActivity.class));
                 } else {
-                    Toast.makeText(this, "Please select a day", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please selected an alarm time and a day", Toast
+                            .LENGTH_SHORT)
+                            .show();
                 }
                 break;
             case R.id.cancel:
